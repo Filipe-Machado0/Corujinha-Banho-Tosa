@@ -437,7 +437,7 @@
       `📅 *Data:* ${formatHumanDate(record.date)} às ${record.time}\n` +
       `👤 *Tutor:* ${record.clientName}\n` +
       (record.notes ? `📝 *Observação:* ${record.notes}\n\n` : `\n`) +
-      `Poderiam confirmar meu horário? Obrigado(a)!`;
+      `Obrigado(a)!`;
 
     const encodedMsg = encodeURIComponent(msg);
     const waBtn = document.getElementById('btnWhatsAppConfirmSend');
