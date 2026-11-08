@@ -459,6 +459,18 @@
       if (e.target === backdrop) closeModal();
     });
 
+    // Botão de envio WhatsApp na etapa final
+    const waConfirmBtn = document.getElementById('btnWhatsAppConfirmSend');
+    if (waConfirmBtn) {
+      waConfirmBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // Não previne default para abrir o WhatsApp normalmente em nova aba
+        setTimeout(() => {
+          closeModal();
+        }, 1200);
+      });
+    }
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && backdrop.classList.contains('is-open')) {
         closeModal();
@@ -536,6 +548,11 @@
   // Intercepta todos os cliques em botões de agendamento na página
   function attachTriggerButtons() {
     document.addEventListener('click', (e) => {
+      // Se clicou dentro do próprio modal de agendamento, NUNCA intercepta
+      if (e.target.closest('#bookingModalBackdrop') || e.target.closest('.booking-modal')) {
+        return;
+      }
+
       // Se clicou num botão que é CTA de agendamento
       const target = e.target.closest('a, button');
       if (!target) return;
@@ -545,9 +562,9 @@
 
       // Se for botão de agendamento do site (hero, header, cards)
       if (
-        (href.includes('wa.me') && !target.classList.contains('whatsapp-float') && !target.closest('.contact')) ||
+        (href.includes('wa.me') && !target.classList.contains('whatsapp-float') && !target.closest('.contact') && !target.closest('.footer')) ||
         target.classList.contains('js-trigger-booking') ||
-        text.includes('Agendar')
+        (text.includes('Agendar') && !target.closest('.booking-modal'))
       ) {
         e.preventDefault();
         
