@@ -251,6 +251,12 @@ const BookingStore = {
           { event: '*', schema: 'public', table: 'appointments' },
           async (payload) => {
             console.log('[Corujinha Realtime] Mudança em appointments:', payload);
+            if (payload.eventType === 'INSERT' && payload.new) {
+              const newApp = mapFromSupabase(payload.new);
+              window.dispatchEvent(new CustomEvent('corujinha_new_appointment', {
+                detail: newApp
+              }));
+            }
             await this.refreshAppointmentsFromCloud();
           }
         )

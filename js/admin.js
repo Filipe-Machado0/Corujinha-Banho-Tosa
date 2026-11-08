@@ -313,6 +313,233 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDbBadge(true, BookingStore.cloudStatusMessage);
   }
 
+  // ========================================================================
+  // SISTEMA DE NOTIFICAÇÕES (SOM, TOAST VISUAL E ALERTA NATIVO)
+  // ========================================================================
+  const btnNotifyToggle = document.getElementById('btnNotifyToggle');
+  const btnNotifyText = document.getElementById('btnNotifyText');
+  const toastContainer = document.getElementById('adminToastContainer');
+  let audioContext = null;
+  let notificationsEnabled = localStorage.getItem('corujinha_notifications_enabled') === 'true';
+
+  // Inicializa estado visual do botão
+  function updateNotifyButtonUI() {
+    if (!btnNotifyToggle) return;
+    if (notificationsEnabled) {
+      btnNotifyToggle.classList.add('is-active');
+      btnNotifyText.textContent = 'Alertas Ativos';
+      btnNotifyToggle.title = 'Alertas sonoros e notificações ativados';
+    } else {
+      btnNotifyToggle.classList.remove('is-active');
+      btnNotifyText.textContent = 'Ativar Alertas';
+      btnNotifyToggle.title = 'Clique para ativar som e notificações';
+    }
+  }
+  updateNotifyButtonUI();
+
+  // Emite som de sino suave e profissional via Web Audio API (sem dependência de arquivos externos)
+  function playNotificationChime() {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!audioContext) audioContext = new AudioCtx();
+      if (audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
+
+      const now = audioContext.currentTime;
+
+      // Nota 1: Mi alto (E5 - 659.25Hz)
+      const osc1 = audioContext.createOscillator();
+      const gain1 = audioContext.createGain();
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(659.25, now);
+      gain1.gain.setValueAtTime(0.25, now);
+      gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+      osc1.connect(gain1);
+      gain1.connect(audioContext.destination);
+      osc1.start(now);
+      osc1.stop(now + 0.35);
+
+      // Nota 2: Si alto (B5 - 987.77Hz)
+      const osc2 = audioContext.createOscillator();
+      const gain2 = audioContext.createGain();
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(987.77, now + 0.12);
+      gain2.gain.setValueAtTime(0.3, now + 0.12);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+      osc2.connect(gain2);
+      gain2.connect(audioContext.destination);
+      osc2.start(now + 0.12);
+      osc2.stop(now + 0.65);
+    } catch (err) {
+      console.warn('Erro ao reproduzir alerta sonoro:', err);
+    }
+  }
+
+  // Ativa / Desativa notificações ao clicar
+  if (btnNotifyToggle) {
+    btnNotifyToggle.addEventListener('click', async () => {
+      // Cria/desbloqueia o contexto de áudio pelo clique do usuário
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx && !audioContext) audioContext = new AudioCtx();
+      if (audioContext && audioContext.state === 'suspended') {
+        await audioContext.resume();
+      }
+
+      if (!notificationsEnabled) {
+        notificationsEnabled = true;
+        localStorage.setItem('corujinha_notifications_enabled', 'true');
+        updateNotifyButtonUI();
+        playNotificationChime();
+
+        // Solicita permissão do navegador para notificações na barra do Windows/Android
+        if ('Notification' in window && Notification.permission !== 'granted') {
+          try {
+            await Notification.requestPermission();
+          } catch (e) {
+            console.log('Permissão de notificação:', e);
+          }
+        }
+
+        showToast({
+          petName: 'Alertas Ativados!',
+          service: 'Você receberá avisos sonoros e pop-ups quando clientes agendarem.',
+          date: todayISO,
+          time: 'Agora',
+          clientName: 'Sistema Corujinha'
+        });
+      } else {
+        notificationsEnabled = false;
+        localStorage.setItem('corujinha_notifications_enabled', 'false');
+        updateNotifyButtonUI();
+      }
+    });
+  }
+
+  // Notificação Pop-up Toast na tela do painel
+  function showToast(app) {
+    if (!toastContainer) return;
+
+    const toast = document.createElement('div');
+    toast.className = 'admin-toast';
+    toast.innerHTML = `
+      <div class="admin-toast__header">
+        <div class="admin-toast__title-wrap">
+          <div class="admin-toast__badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          </div>
+          <span class="admin-toast__title">Novo Agendamento!</span>
+        </div>
+        <button type="button" class="admin-toast__close" aria-label="Fechar notificação">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="admin-toast__body">
+        <div class="admin-toast__pet-name">🐾 ${escapeHtml(app.petName || 'Pet')}</div>
+        <div class="admin-toast__details">
+          <strong>${escapeHtml(app.service || 'Serviço')}</strong><br>
+          Cliente: ${escapeHtml(app.clientName || 'Cliente')}
+        </div>
+        <div class="admin-toast__footer">
+          <span class="admin-toast__time">📅 ${app.date} às ${app.time}</span>
+          <button type="button" class="admin-toast__action" id="btnToastView">Ver no painel</button>
+        </div>
+      </div>
+    `;
+
+    // Fechar botão
+    const closeBtn = toast.querySelector('.admin-toast__close');
+    const dismiss = () => {
+      toast.classList.add('is-leaving');
+      setTimeout(() => {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 300);
+    };
+    closeBtn.addEventListener('click', dismiss);
+
+    // Botão "Ver no painel"
+    const viewBtn = toast.querySelector('#btnToastView');
+    if (viewBtn) {
+      viewBtn.addEventListener('click', () => {
+        // Se a data for hoje, seleciona aba hoje, senão semana ou todos
+        if (app.date === todayISO) {
+          activeDateFilter = 'hoje';
+        } else if (app.date === tomorrowISO) {
+          activeDateFilter = 'amanha';
+        } else {
+          activeDateFilter = 'todos';
+        }
+        dateTabs.forEach(t => {
+          t.classList.toggle('is-active', t.getAttribute('data-date-filter') === activeDateFilter);
+        });
+        renderAll();
+        dismiss();
+      });
+    }
+
+    // Auto dismiss após 8 segundos
+    setTimeout(dismiss, 8000);
+
+    toastContainer.appendChild(toast);
+  }
+
+  // Notificação Nativa do Sistema Operacional (Windows / Android)
+  function showNativeNotification(app) {
+    if ('Notification' in window && Notification.permission === 'granted') {
+      try {
+        const n = new Notification(`🐾 Novo Agendamento: ${app.petName || 'Pet'}`, {
+          body: `${app.service} • ${app.date} às ${app.time}\nCliente: ${app.clientName}`,
+          icon: 'assets/logo.png',
+          badge: 'assets/logo.png',
+          tag: 'corujinha-booking-' + (app.id || Date.now())
+        });
+        n.onclick = () => {
+          window.focus();
+        };
+      } catch (err) {
+        console.warn('Erro ao disparar notificação nativa:', err);
+      }
+    }
+  }
+
+  // Altera o título da aba do navegador para chamar a atenção
+  let originalTitle = document.title;
+  let titleBlinkInterval = null;
+  function triggerTabTitleAlert(petName) {
+    if (titleBlinkInterval) clearInterval(titleBlinkInterval);
+    let state = false;
+    titleBlinkInterval = setInterval(() => {
+      document.title = state ? `🔔 (1) Novo Pet: ${petName}!` : originalTitle;
+      state = !state;
+    }, 1000);
+
+    const stopBlink = () => {
+      clearInterval(titleBlinkInterval);
+      titleBlinkInterval = null;
+      document.title = originalTitle;
+      window.removeEventListener('focus', stopBlink);
+    };
+    window.addEventListener('focus', stopBlink);
+  }
+
+  // ESCUTA O EVENTO DE NOVO AGENDAMENTO (EM TEMPO REAL)
+  const handledIds = new Set();
+  window.addEventListener('corujinha_new_appointment', (e) => {
+    const app = e.detail;
+    if (!app || !app.id) return;
+    if (handledIds.has(app.id)) return;
+    handledIds.add(app.id);
+
+    // Se as notificações estiverem ativas (ou padrão na primeira vez)
+    if (notificationsEnabled) {
+      playNotificationChime();
+    }
+    showToast(app);
+    showNativeNotification(app);
+    triggerTabTitleAlert(app.petName || 'Agendamento');
+  });
+
   // Inicializa renderização
   renderAll();
 });
