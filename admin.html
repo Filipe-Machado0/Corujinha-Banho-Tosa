@@ -24,6 +24,11 @@
       </div>
 
       <div class="admin-header__actions">
+        <div class="db-sync-indicator" id="dbSyncIndicator" title="Status da sincronização em nuvem">
+          <span class="db-sync-dot"></span>
+          <span class="db-sync-text" id="dbSyncText">Supabase Conectando...</span>
+        </div>
+
         <button type="button" class="btn-admin btn-admin--primary" id="btnOpenBlockModal">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
           <span>Bloquear Horário</span>
@@ -172,6 +177,7 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/booking-store.js"></script>
   <script src="js/admin.js"></script>
 </body>

@@ -288,6 +288,31 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('corujinha_store_updated', renderAll);
   window.addEventListener('storage', renderAll);
 
+  // Status da conexão com Supabase
+  const dbSyncIndicator = document.getElementById('dbSyncIndicator');
+  const dbSyncText = document.getElementById('dbSyncText');
+
+  function updateDbBadge(connected, message) {
+    if (!dbSyncIndicator || !dbSyncText) return;
+    if (connected) {
+      dbSyncIndicator.className = 'db-sync-indicator is-connected';
+      dbSyncText.textContent = 'Supabase Conectado';
+      dbSyncIndicator.title = message || 'Conexão ativa em tempo real com o banco de dados';
+    } else {
+      dbSyncIndicator.className = 'db-sync-indicator is-offline';
+      dbSyncText.textContent = 'Modo Local';
+      dbSyncIndicator.title = message || 'Offline ou tabelas pendentes no Supabase';
+    }
+  }
+
+  window.addEventListener('corujinha_db_status', (e) => {
+    updateDbBadge(e.detail.connected, e.detail.message);
+  });
+
+  if (BookingStore.isCloudConnected) {
+    updateDbBadge(true, BookingStore.cloudStatusMessage);
+  }
+
   // Inicializa renderização
   renderAll();
 });
