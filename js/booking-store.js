@@ -135,8 +135,7 @@ const BookingStore = {
   // Inicializa dados locais e conexão na nuvem
   init() {
     if (!localStorage.getItem(BOOKING_STORE_KEY)) {
-      const initial = getInitialSampleAppointments();
-      localStorage.setItem(BOOKING_STORE_KEY, JSON.stringify(initial));
+      localStorage.setItem(BOOKING_STORE_KEY, JSON.stringify([]));
     }
     if (!localStorage.getItem(BLOCKED_SLOTS_KEY)) {
       localStorage.setItem(BLOCKED_SLOTS_KEY, JSON.stringify([]));
@@ -203,15 +202,8 @@ const BookingStore = {
         return;
       }
 
-      // Se a tabela existe mas está vazia, podemos carregar os dados de demonstração iniciais para não ficar zerado
-      if (cloudAppointments && cloudAppointments.length === 0) {
-        const localApps = this.getAll();
-        if (localApps.length > 0) {
-          const rowsToInsert = localApps.map(mapToSupabase);
-          await this.supabaseClient.from('appointments').insert(rowsToInsert);
-        }
-      } else if (cloudAppointments && cloudAppointments.length > 0) {
-        // Atualiza o cache local com os dados vindos do banco
+      // Atualiza o cache local com os dados reais vindos do banco (ou vazio se zerado)
+      if (cloudAppointments) {
         const mapped = cloudAppointments.map(mapFromSupabase);
         localStorage.setItem(BOOKING_STORE_KEY, JSON.stringify(mapped));
       }
