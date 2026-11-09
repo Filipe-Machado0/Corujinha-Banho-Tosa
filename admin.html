@@ -15,18 +15,37 @@
   <!-- Top Admin Navbar -->
   <header class="admin-header">
     <div class="admin-container admin-header__inner">
-      <div class="admin-brand">
-        <img src="assets/logo.png" alt="Corujinha" class="admin-brand__logo">
-        <div class="admin-brand__text">
-          <h1>Corujinha Banho &amp; Tosa</h1>
-          <span>Painel de Atendimentos &bull; Equipe</span>
+      <div class="admin-header__top">
+        <div class="admin-brand">
+          <img src="assets/logo.png" alt="Corujinha" class="admin-brand__logo">
+          <div class="admin-brand__text">
+            <h1>Corujinha Banho &amp; Tosa</h1>
+            <span>Painel da Equipe</span>
+          </div>
+        </div>
+
+        <div class="admin-header__user-group">
+          <div class="admin-user-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span>admincorujinha1</span>
+          </div>
+
+          <button type="button" class="btn-admin btn-admin--logout" id="btnLogoutAdmin" title="Sair do painel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            <span>Sair</span>
+          </button>
         </div>
       </div>
 
       <div class="admin-header__actions">
+        <button type="button" class="btn-admin btn-admin--primary" id="btnOpenBlockModal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          <span>Bloquear Horário</span>
+        </button>
+
         <button type="button" class="btn-admin btn-admin--outline btn-notify-toggle" id="btnNotifyToggle" title="Ativar alertas sonoros e notificações">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-          <span id="btnNotifyText">Ativar Alertas</span>
+          <span id="btnNotifyText">Alertas</span>
         </button>
 
         <div class="db-sync-indicator" id="dbSyncIndicator" title="Status da sincronização em nuvem">
@@ -34,25 +53,10 @@
           <span class="db-sync-text" id="dbSyncText">Supabase Conectando...</span>
         </div>
 
-        <button type="button" class="btn-admin btn-admin--primary" id="btnOpenBlockModal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-          <span>Bloquear Horário</span>
-        </button>
-
         <a href="index.html" target="_blank" class="btn-admin btn-admin--outline">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           <span>Ver Site</span>
         </a>
-
-        <div class="admin-user-chip">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-          <span>admincorujinha1</span>
-        </div>
-
-        <button type="button" class="btn-admin btn-admin--logout" id="btnLogoutAdmin" title="Sair do painel">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-          <span>Sair</span>
-        </button>
       </div>
     </div>
   </header>

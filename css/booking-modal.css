@@ -615,20 +615,208 @@
   height: 24px;
 }
 
-@media (max-width: 540px) {
+@media (max-width: 640px) {
+  .booking-modal-backdrop {
+    padding: 0;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow-y: hidden;
+  }
+
+  .booking-modal {
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+    border: none;
+    margin: 0;
+    transform: none !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .booking-modal-backdrop.is-open .booking-modal {
+    transform: none !important;
+  }
+
+  .booking-modal__header {
+    flex-shrink: 0;
+    padding: 12px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+
+  .booking-modal__logo-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    padding: 2px;
+  }
+
+  .booking-modal__title {
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+
+  .booking-modal__subtitle {
+    font-size: 0.72rem;
+  }
+
+  .booking-steps-bar {
+    flex-shrink: 0;
+    padding: 8px 12px;
+    gap: 4px;
+    background: #f1f5f9;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .booking-step-dot {
+    gap: 4px;
+    justify-content: center;
+  }
+
+  .booking-step-dot__num {
+    width: 22px;
+    height: 22px;
+    font-size: 0.7rem;
+  }
+
+  .booking-step-dot span:not(.booking-step-dot__num) {
+    display: none;
+  }
+
+  .booking-modal__body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 16px 14px 30px;
+  }
+
+  .step-instruction {
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+  }
+
+  .step-hint {
+    font-size: 0.8rem;
+    margin-bottom: 14px;
+  }
+
+  /* Opções de Serviço */
+  .booking-options-grid {
+    gap: 8px;
+  }
+
+  .option-card-radio {
+    padding: 12px 10px;
+    border-radius: 12px;
+  }
+
+  .option-card-radio__main strong {
+    font-size: 0.95rem;
+  }
+
+  .option-card-radio__main span {
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+
+  /* Seletor de Porte */
   .pet-size-selector {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
+
+  .size-card-radio {
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    border-radius: 10px;
+  }
+
+  .size-card-radio strong {
+    font-size: 0.9rem;
+  }
+
+  .size-card-radio span {
+    font-size: 0.75rem;
+  }
+
+  /* Etapa 2: Data e Horário */
   .slots-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
   }
+
+  .slot-btn {
+    padding: 10px 4px;
+    min-height: 48px;
+    font-size: 0.95rem;
+  }
+
+  .slot-btn span {
+    font-size: 0.65rem;
+  }
+
+  /* Formulário e Inputs */
   .form-row--two-col {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
-  .booking-steps-bar {
-    padding: 10px 14px;
+
+  .booking-form-group {
+    margin-bottom: 14px;
   }
-  .booking-step-dot span {
-    display: none;
+
+  .booking-form-group label {
+    font-size: 0.82rem;
+    margin-bottom: 4px;
+  }
+
+  .booking-input,
+  .booking-textarea,
+  .booking-date-picker {
+    font-size: 16px !important; /* Impede zoom forçado no mobile Safari / Android */
+    padding: 12px 14px;
+    border-radius: 10px;
+    min-height: 46px;
+  }
+
+  .booking-modal__footer {
+    flex-shrink: 0;
+    padding: 12px 14px;
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-modal-next,
+  .btn-modal-prev {
+    height: 48px;
+    font-size: 0.95rem;
+    border-radius: 9999px;
+  }
+
+  .btn-whatsapp-confirm {
+    padding: 16px 20px;
+    font-size: 1rem;
+    min-height: 52px;
+  }
+
+  .booking-ticket {
+    padding: 14px;
+    margin: 12px 0 16px;
+  }
+
+  .booking-ticket__row {
+    font-size: 0.82rem;
+    padding: 6px 0;
   }
 }

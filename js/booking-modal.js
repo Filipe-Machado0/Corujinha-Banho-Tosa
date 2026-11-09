@@ -361,6 +361,29 @@
     });
   }
 
+  function resetModalScroll() {
+    const backdrop = document.getElementById('bookingModalBackdrop');
+    if (!backdrop) return;
+    const modalCard = backdrop.querySelector('.booking-modal');
+    const modalBody = backdrop.querySelector('.booking-modal__body');
+
+    backdrop.scrollTop = 0;
+    if (modalCard) modalCard.scrollTop = 0;
+    if (modalBody) modalBody.scrollTop = 0;
+
+    // Garante no próximo frame de renderização
+    requestAnimationFrame(() => {
+      backdrop.scrollTop = 0;
+      if (modalCard) modalCard.scrollTop = 0;
+      if (modalBody) modalBody.scrollTop = 0;
+    });
+    setTimeout(() => {
+      backdrop.scrollTop = 0;
+      if (modalCard) modalCard.scrollTop = 0;
+      if (modalBody) modalBody.scrollTop = 0;
+    }, 40);
+  }
+
   function goToStep(step) {
     bookingState.currentStep = step;
     document.querySelectorAll('.booking-step-panel').forEach(p => p.classList.remove('is-active'));
@@ -371,6 +394,7 @@
       renderSlots();
     }
     updateNavButtons();
+    resetModalScroll();
   }
 
   // Formata data ISO para legível em português (ex: "Quarta-feira, 11 de Novembro")
@@ -531,10 +555,13 @@
       const targetRadio = document.querySelector(`input[name="bookingService"][value="${presetService}"]`);
       if (targetRadio) targetRadio.checked = true;
     }
-    goToStep(1);
     const backdrop = document.getElementById('bookingModalBackdrop');
-    backdrop.classList.add('is-open');
+    if (backdrop) {
+      backdrop.classList.add('is-open');
+    }
     document.body.style.overflow = 'hidden';
+    goToStep(1);
+    resetModalScroll();
   }
 
   function closeModal() {

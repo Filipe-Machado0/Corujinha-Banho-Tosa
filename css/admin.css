@@ -78,6 +78,19 @@ body {
   gap: 16px;
 }
 
+.admin-header__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.admin-header__user-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .admin-brand {
   display: flex;
   align-items: center;
@@ -952,27 +965,278 @@ body {
   100% { transform: rotate(0); }
 }
 
-/* Responsive */
+/* ==========================================================================
+   Mobile & Responsive Overhaul (100% Otimizado para Smartphones)
+   ========================================================================== */
+
 @media (max-width: 900px) {
   .admin-kpis {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-header {
+    padding: 10px 0;
+  }
+
+  .admin-header__inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .admin-header__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .admin-brand__logo {
+    width: 38px;
+    height: 38px;
+  }
+
+  .admin-brand__text h1 {
+    font-size: 1.1rem;
+  }
+
+  .admin-brand__text span {
+    font-size: 0.72rem;
+  }
+
+  .admin-header__actions {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+
+  .admin-header__actions::-webkit-scrollbar {
+    display: none;
+  }
+
+  .btn-admin {
+    padding: 8px 13px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .btn-admin svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .db-sync-indicator {
+    padding: 6px 11px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 }
 
 @media (max-width: 640px) {
-  .admin-kpis {
-    grid-template-columns: 1fr;
+  .admin-container {
+    padding: 0 14px;
   }
+
+  .admin-main {
+    padding: 16px 0 40px;
+  }
+
+  /* KPIs em grade compacta 2x2 */
+  .admin-kpis {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .kpi-card {
+    padding: 12px 14px;
+    border-radius: 12px;
+    gap: 10px;
+  }
+
+  .kpi-card__icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .kpi-card__icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .kpi-value {
+    font-size: 1.35rem;
+    line-height: 1.1;
+  }
+
+  .kpi-label {
+    font-size: 0.72rem;
+  }
+
+  /* Toolbar de Filtros */
   .admin-toolbar {
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
+    padding: 10px 12px;
+    margin-bottom: 16px;
+    border-radius: 14px;
   }
+
   .toolbar-tabs {
+    display: flex;
     overflow-x: auto;
-    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    gap: 6px;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+    width: 100%;
   }
+
+  .toolbar-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-btn {
+    white-space: nowrap;
+    padding: 7px 14px;
+    font-size: 0.82rem;
+    flex-shrink: 0;
+    border-radius: var(--radius-full);
+  }
+
+  .admin-select {
+    width: 100%;
+    height: 42px;
+    font-size: 0.88rem;
+    border-radius: 10px;
+  }
+
+  /* Cards de Agendamentos */
+  .appointments-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    margin-bottom: 12px;
+  }
+
+  .appointments-title {
+    font-size: 1.18rem;
+  }
+
+  .appointments-count {
+    font-size: 0.8rem;
+  }
+
   .appointments-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .appointment-card {
+    border-radius: 14px;
+  }
+
+  .card-top {
+    padding: 10px 14px;
+  }
+
+  .card-time {
+    font-size: 0.98rem;
+  }
+
+  .card-body {
+    padding: 12px 14px;
+  }
+
+  .card-pet-name {
+    font-size: 1.15rem;
+  }
+
+  .card-pet-breed,
+  .card-service-tag {
+    font-size: 0.75rem;
+  }
+
+  .card-client {
+    font-size: 0.82rem;
+  }
+
+  .card-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px 14px;
+  }
+
+  .btn-card-wa {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    border-radius: 10px;
+    min-height: 42px;
+  }
+
+  .card-action-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .btn-icon-action {
+    width: 100%;
+    height: 38px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Modal de Bloqueio em Bottom-Sheet */
+  .admin-modal-backdrop {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .admin-modal {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    margin: 0;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .admin-input,
+  .admin-select {
+    font-size: 16px !important; /* Impede zoom forçado no mobile */
+    min-height: 44px;
+  }
+
+  /* Notificações Toast no mobile */
+  .admin-toast-container {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: 100%;
+  }
+
+  .admin-toast {
+    width: 100%;
+    border-radius: 12px;
   }
 }
 
