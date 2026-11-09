@@ -512,12 +512,6 @@ document.addEventListener('DOMContentLoaded', () => {
     toastContainer.appendChild(toast);
   }
 
-    // Auto dismiss após 8 segundos
-    setTimeout(dismiss, 8000);
-
-    toastContainer.appendChild(toast);
-  }
-
   // Notificação Nativa do Sistema Operacional (Windows / Android)
   function showNativeNotification(app) {
     if ('Notification' in window && Notification.permission === 'granted') {
@@ -602,6 +596,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (loginScreen) {
       loginScreen.classList.add('is-hidden');
+      loginScreen.style.display = 'none';
     }
     renderAll();
   }
@@ -611,6 +606,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionStorage.removeItem(AUTH_KEY);
     if (loginScreen) {
       loginScreen.classList.remove('is-hidden');
+      loginScreen.style.display = 'flex';
     }
     if (loginPassInput) loginPassInput.value = '';
     if (loginErrorMessage) loginErrorMessage.style.display = 'none';
@@ -619,9 +615,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Verifica estado inicial de login
   if (!isAuthenticated()) {
-    if (loginScreen) loginScreen.classList.remove('is-hidden');
+    if (loginScreen) {
+      loginScreen.classList.remove('is-hidden');
+      loginScreen.style.display = 'flex';
+    }
   } else {
-    if (loginScreen) loginScreen.classList.add('is-hidden');
+    if (loginScreen) {
+      loginScreen.classList.add('is-hidden');
+      loginScreen.style.display = 'none';
+    }
   }
 
   // Toggle mostrar/ocultar senha
@@ -633,14 +635,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Submissão do login
+  // Submissão do login (com suporte a maiúsculas/minúsculas no usuário)
   if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const user = (loginUserInput.value || '').trim();
+      const user = (loginUserInput.value || '').trim().toLowerCase();
       const pass = (loginPassInput.value || '').trim();
 
-      if (user === VALID_USER && pass === VALID_PASS) {
+      if (user === VALID_USER.toLowerCase() && pass === VALID_PASS) {
         if (loginErrorMessage) loginErrorMessage.style.display = 'none';
         const remember = loginRememberMe ? loginRememberMe.checked : true;
         setAuthenticated(remember);
