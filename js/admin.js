@@ -446,68 +446,70 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Notificação Pop-up Toast na tela do painel
+  // Notificação em Banner Estilo Push de Celular
   function showToast(app) {
     if (!toastContainer) return;
 
     const toast = document.createElement('div');
-    toast.className = 'admin-toast';
+    toast.className = 'app-notification-banner';
+    toast.setAttribute('role', 'alert');
     toast.innerHTML = `
-      <div class="admin-toast__header">
-        <div class="admin-toast__title-wrap">
-          <div class="admin-toast__badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-          </div>
-          <span class="admin-toast__title">Novo Agendamento na Tela!</span>
+      <div class="app-banner__top">
+        <div class="app-banner__brand">
+          <img src="assets/logo.png" alt="Corujinha" class="app-banner__icon">
+          <span class="app-banner__app-name">Corujinha Pet Shop</span>
+          <span class="app-banner__dot">&bull;</span>
+          <span class="app-banner__time">Agora</span>
         </div>
-        <button type="button" class="admin-toast__close" aria-label="Fechar notificação">
+        <button type="button" class="app-banner__close" aria-label="Fechar notificação">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
       </div>
-      <div class="admin-toast__body">
-        <div class="admin-toast__pet-name">🐾 ${escapeHtml(app.petName || 'Pet')} ${app.petBreed ? `<small style="font-weight:normal;color:#64748b;">(${escapeHtml(app.petBreed)})</small>` : ''}</div>
-        <div class="admin-toast__details">
-          <strong>${escapeHtml(app.service || 'Serviço')}</strong><br>
-          Tutor: ${escapeHtml(app.clientName || 'Cliente')}
-        </div>
-        <div class="admin-toast__footer">
-          <span class="admin-toast__time">📅 ${app.date} às ${app.time}</span>
-          <button type="button" class="admin-toast__action" id="btnToastView">Ver no Painel &rarr;</button>
-        </div>
+      <div class="app-banner__content">
+        <h4 class="app-banner__title">🐾 Novo Agendamento: <strong>${escapeHtml(app.petName || 'Pet')}</strong>!</h4>
+        <p class="app-banner__text">
+          <strong>${escapeHtml(app.service || 'Serviço')}</strong> &bull; 📅 ${app.date} às ${app.time}
+        </p>
+        <span class="app-banner__client">Tutor: ${escapeHtml(app.clientName || 'Cliente')} ${app.clientPhone ? `(${escapeHtml(app.clientPhone)})` : ''}</span>
+      </div>
+      <div class="app-banner__action">
+        <span>Toque para ver no painel</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </div>
     `;
 
-    // Fechar botão
-    const closeBtn = toast.querySelector('.admin-toast__close');
-    const dismiss = () => {
+    const dismiss = (e) => {
+      if (e) e.stopPropagation();
       toast.classList.add('is-leaving');
       setTimeout(() => {
         if (toast.parentNode) toast.parentNode.removeChild(toast);
       }, 300);
     };
-    closeBtn.addEventListener('click', dismiss);
 
-    // Botão "Ver no painel"
-    const viewBtn = toast.querySelector('#btnToastView');
-    if (viewBtn) {
-      viewBtn.addEventListener('click', () => {
-        if (app.date === todayISO) {
-          activeDateFilter = 'hoje';
-        } else if (app.date === tomorrowISO) {
-          activeDateFilter = 'amanha';
-        } else {
-          activeDateFilter = 'todos';
-        }
-        dateTabs.forEach(t => {
-          t.classList.toggle('is-active', t.getAttribute('data-date-filter') === activeDateFilter);
-        });
-        renderAll();
-        dismiss();
+    // Fechar botão
+    const closeBtn = toast.querySelector('.app-banner__close');
+    if (closeBtn) closeBtn.addEventListener('click', dismiss);
+
+    // Clicar no banner filtra e abre o dia do agendamento
+    toast.addEventListener('click', (e) => {
+      if (e.target.closest('.app-banner__close')) return;
+
+      if (app.date === todayISO) {
+        activeDateFilter = 'hoje';
+      } else if (app.date === tomorrowISO) {
+        activeDateFilter = 'amanha';
+      } else {
+        activeDateFilter = 'todos';
+      }
+      dateTabs.forEach(t => {
+        t.classList.toggle('is-active', t.getAttribute('data-date-filter') === activeDateFilter);
       });
-    }
+      renderAll();
+      dismiss();
+    });
 
-    // Auto dismiss após 12 segundos
-    setTimeout(dismiss, 12000);
+    // Auto dismiss após 14 segundos
+    setTimeout(dismiss, 14000);
 
     toastContainer.appendChild(toast);
   }

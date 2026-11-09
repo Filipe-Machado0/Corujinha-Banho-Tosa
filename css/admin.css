@@ -806,36 +806,54 @@ body {
   stroke: #4ade80;
 }
 
+/* ==========================================================================
+   Mobile Push Notification Banner (Estilo Notificação de App do Celular)
+   ========================================================================== */
+
+.app-notification-banner-container,
 .admin-toast-container {
   position: fixed;
-  top: 24px;
-  right: 24px;
-  z-index: 99999;
+  top: 14px;
+  left: 0;
+  right: 0;
+  z-index: 9999999;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  align-items: center;
   pointer-events: none;
-  max-width: 90vw;
+  padding: 0 14px;
+  gap: 10px;
 }
 
+.app-notification-banner,
 .admin-toast {
   pointer-events: auto;
-  width: 380px;
-  max-width: 100%;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 16px 45px rgba(12, 35, 64, 0.28), 0 0 0 2px rgba(22, 163, 74, 0.25);
-  border-left: 6px solid #16a34a;
-  overflow: hidden;
-  position: relative;
-  animation: toastPopIn 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  transition: all 0.3s;
+  width: 100%;
+  max-width: 480px;
+  background: rgba(12, 35, 64, 0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 14px 18px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.16), 0 0 24px rgba(34, 197, 94, 0.4);
+  border-left: 6px solid #22c55e;
+  cursor: pointer;
+  animation: bannerSlideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: all 0.3s ease;
+  user-select: none;
 }
 
-@keyframes toastPopIn {
+.app-notification-banner.is-leaving,
+.admin-toast.is-leaving {
+  opacity: 0;
+  transform: translateY(-50px) scale(0.92);
+}
+
+@keyframes bannerSlideDown {
   from {
     opacity: 0;
-    transform: translateY(-20px) scale(0.92);
+    transform: translateY(-80px) scale(0.9);
   }
   to {
     opacity: 1;
@@ -843,116 +861,114 @@ body {
   }
 }
 
-.admin-toast.is-leaving {
-  opacity: 0;
-  transform: translateX(50px) scale(0.95);
-}
-
-.admin-toast__header {
+.app-banner__top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 14px 6px;
+  margin-bottom: 6px;
 }
 
-.admin-toast__title-wrap {
+.app-banner__brand {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.admin-toast__badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--royal-light);
-  color: var(--royal-main);
-}
-
-.admin-toast__badge svg {
-  width: 16px;
-  height: 16px;
-  animation: bellRing 1s ease-in-out;
-}
-
-.admin-toast__title {
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--slate-900);
-  line-height: 1.2;
-}
-
-.admin-toast__close {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: var(--slate-500);
-  padding: 4px;
+.app-banner__icon {
+  width: 22px;
+  height: 22px;
   border-radius: 6px;
+  background: #ffffff;
+  padding: 2px;
+  object-fit: contain;
+}
+
+.app-banner__app-name {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #93c5fd;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.app-banner__dot {
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+.app-banner__time {
+  font-size: 0.72rem;
+  color: #cbd5e1;
+}
+
+.app-banner__close {
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #cbd5e1;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   transition: all 0.2s;
 }
 
-.admin-toast__close:hover {
-  background: var(--slate-100);
-  color: var(--slate-900);
+.app-banner__close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
 }
 
-.admin-toast__close svg {
-  width: 16px;
-  height: 16px;
+.app-banner__close svg {
+  width: 14px;
+  height: 14px;
 }
 
-.admin-toast__body {
-  padding: 6px 14px 12px;
-}
-
-.admin-toast__pet-name {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--royal-dark);
-  margin-bottom: 2px;
-}
-
-.admin-toast__details {
-  font-size: 0.82rem;
-  color: var(--slate-600);
-  line-height: 1.4;
+.app-banner__content {
   margin-bottom: 8px;
 }
 
-.admin-toast__footer {
+.app-banner__title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 3px;
+}
+
+.app-banner__title strong {
+  color: #4ade80;
+}
+
+.app-banner__text {
+  font-size: 0.86rem;
+  color: #e2e8f0;
+  line-height: 1.35;
+  margin-bottom: 2px;
+}
+
+.app-banner__client {
+  display: block;
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+.app-banner__action {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding-top: 8px;
-  border-top: 1px solid var(--slate-100);
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #60a5fa;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 6px;
 }
 
-.admin-toast__time {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--royal-main);
-  background: var(--royal-light);
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
-}
-
-.admin-toast__action {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--royal-main);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 2px 6px;
-  text-decoration: underline;
+.app-banner__action svg {
+  width: 14px;
+  height: 14px;
 }
 
 @keyframes toastSlideIn {
