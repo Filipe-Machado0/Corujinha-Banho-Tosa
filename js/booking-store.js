@@ -52,10 +52,24 @@ function mapToSupabase(app) {
   };
 }
 
+// Canal de comunicação instantânea entre abas no mesmo navegador
+const corujinhaBroadcast = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('corujinha_channel_v1') : null;
+if (corujinhaBroadcast) {
+  corujinhaBroadcast.onmessage = (event) => {
+    if (event.data && event.data.type === 'NEW_APPOINTMENT' && event.data.appointment) {
+      window.dispatchEvent(new CustomEvent('corujinha_new_appointment', {
+        detail: event.data.appointment
+      }));
+    }
+  };
+}
+
 const BookingStore = {
   supabaseClient: null,
   isCloudConnected: false,
   cloudStatusMessage: 'Iniciando sincronização...',
+  knownAppointmentIds: null,
+  _pollInterval: null,
 
   // Inicializa dados locais e conexão na nuvem
   init() {
@@ -84,6 +98,7 @@ const BookingStore = {
         );
         this.syncWithCloud();
         this.setupRealtime();
+        this.startPolling();
       } catch (err) {
         console.warn('[Corujinha Store] Erro ao instanciar Supabase:', err);
         this.updateDbStatus(false, 'Falha ao conectar com o Supabase');
@@ -98,9 +113,18 @@ const BookingStore = {
           );
           this.syncWithCloud();
           this.setupRealtime();
+          this.startPolling();
         }
       });
     }
+  },
+
+  startPolling() {
+    if (this._pollInterval) return;
+    this._pollInterval = setInterval(() => {
+      this.refreshAppointmentsFromCloud(true);
+      this.refreshBlockedSlotsFromCloud();
+    }, 3500);
   },
 
   // Atualiza status e emite evento para a interface
@@ -135,6 +159,9 @@ const BookingStore = {
       // Atualiza o cache local com os dados reais vindos do banco (ou vazio se zerado)
       if (cloudAppointments) {
         const mapped = cloudAppointments.map(mapFromSupabase);
+        if (this.knownAppointmentIds === null) {
+          this.knownAppointmentIds = new Set(mapped.map(a => a.id));
+        }
         localStorage.setItem(BOOKING_STORE_KEY, JSON.stringify(mapped));
       }
 
@@ -200,7 +227,7 @@ const BookingStore = {
     }
   },
 
-  async refreshAppointmentsFromCloud() {
+  async refreshAppointmentsFromCloud(triggerAlerts = true) {
     if (!this.supabaseClient) return;
     try {
       const { data, error } = await this.supabaseClient
@@ -210,6 +237,20 @@ const BookingStore = {
 
       if (!error && data) {
         const mapped = data.map(mapFromSupabase);
+
+        if (this.knownAppointmentIds === null) {
+          this.knownAppointmentIds = new Set(mapped.map(a => a.id));
+        } else if (triggerAlerts) {
+          mapped.forEach(app => {
+            if (!this.knownAppointmentIds.has(app.id) && app.status !== 'cancelado') {
+              this.knownAppointmentIds.add(app.id);
+              window.dispatchEvent(new CustomEvent('corujinha_new_appointment', {
+                detail: app
+              }));
+            }
+          });
+        }
+
         localStorage.setItem(BOOKING_STORE_KEY, JSON.stringify(mapped));
         this.notifyUpdate();
       }
@@ -325,6 +366,14 @@ const BookingStore = {
 
     appointments.unshift(newAppointment);
     this.saveAll(appointments);
+
+    // Notifica instantaneamente outras abas abertas no mesmo navegador
+    if (corujinhaBroadcast) {
+      corujinhaBroadcast.postMessage({
+        type: 'NEW_APPOINTMENT',
+        appointment: newAppointment
+      });
+    }
 
     // Salva de forma assíncrona no Supabase
     if (this.supabaseClient) {

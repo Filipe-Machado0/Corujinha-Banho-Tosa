@@ -318,16 +318,33 @@ document.addEventListener('DOMContentLoaded', () => {
   // ========================================================================
   const btnNotifyToggle = document.getElementById('btnNotifyToggle');
   const btnNotifyText = document.getElementById('btnNotifyText');
+  const btnTestNotification = document.getElementById('btnTestNotification');
   const toastContainer = document.getElementById('adminToastContainer');
   let audioContext = null;
-  let notificationsEnabled = localStorage.getItem('corujinha_notifications_enabled') === 'true';
+  // Padrão ativado para garantir que a dona veja os alertas imediatamente
+  let notificationsEnabled = localStorage.getItem('corujinha_notifications_enabled') !== 'false';
+
+  // Desbloqueia contexto de áudio em qualquer primeiro toque ou clique na tela
+  function unlockAudio() {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx && !audioContext) audioContext = new AudioCtx();
+      if (audioContext && audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
+    } catch (e) {}
+    document.removeEventListener('click', unlockAudio);
+    document.removeEventListener('touchstart', unlockAudio);
+  }
+  document.addEventListener('click', unlockAudio);
+  document.addEventListener('touchstart', unlockAudio);
 
   // Inicializa estado visual do botão
   function updateNotifyButtonUI() {
     if (!btnNotifyToggle) return;
     if (notificationsEnabled) {
       btnNotifyToggle.classList.add('is-active');
-      btnNotifyText.textContent = 'Alertas Ativos';
+      btnNotifyText.textContent = 'Alertas na Tela: Ativos';
       btnNotifyToggle.title = 'Alertas sonoros e notificações ativados';
     } else {
       btnNotifyToggle.classList.remove('is-active');
@@ -354,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const gain1 = audioContext.createGain();
       osc1.type = 'sine';
       osc1.frequency.setValueAtTime(659.25, now);
-      gain1.gain.setValueAtTime(0.25, now);
+      gain1.gain.setValueAtTime(0.3, now);
       gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
       osc1.connect(gain1);
       gain1.connect(audioContext.destination);
@@ -366,12 +383,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const gain2 = audioContext.createGain();
       osc2.type = 'sine';
       osc2.frequency.setValueAtTime(987.77, now + 0.12);
-      gain2.gain.setValueAtTime(0.3, now + 0.12);
-      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+      gain2.gain.setValueAtTime(0.35, now + 0.12);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.7);
       osc2.connect(gain2);
       gain2.connect(audioContext.destination);
       osc2.start(now + 0.12);
-      osc2.stop(now + 0.65);
+      osc2.stop(now + 0.7);
     } catch (err) {
       console.warn('Erro ao reproduzir alerta sonoro:', err);
     }
@@ -380,12 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Ativa / Desativa notificações ao clicar
   if (btnNotifyToggle) {
     btnNotifyToggle.addEventListener('click', async () => {
-      // Cria/desbloqueia o contexto de áudio pelo clique do usuário
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (AudioCtx && !audioContext) audioContext = new AudioCtx();
-      if (audioContext && audioContext.state === 'suspended') {
-        await audioContext.resume();
-      }
+      unlockAudio();
 
       if (!notificationsEnabled) {
         notificationsEnabled = true;
@@ -393,13 +405,10 @@ document.addEventListener('DOMContentLoaded', () => {
         updateNotifyButtonUI();
         playNotificationChime();
 
-        // Solicita permissão do navegador para notificações na barra do Windows/Android
         if ('Notification' in window && Notification.permission !== 'granted') {
           try {
             await Notification.requestPermission();
-          } catch (e) {
-            console.log('Permissão de notificação:', e);
-          }
+          } catch (e) {}
         }
 
         showToast({
@@ -417,6 +426,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Botão de Testar Notificação na Tela
+  if (btnTestNotification) {
+    btnTestNotification.addEventListener('click', () => {
+      unlockAudio();
+      playNotificationChime();
+      if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+
+      showToast({
+        id: 'CRJ-TEST',
+        petName: 'Thor',
+        petBreed: 'Golden Retriever',
+        service: 'Banho Especial & Hidratação',
+        date: todayISO,
+        time: '14:30',
+        clientName: 'Mariana Camargo'
+      });
+      triggerTabTitleAlert('Thor');
+    });
+  }
+
   // Notificação Pop-up Toast na tela do painel
   function showToast(app) {
     if (!toastContainer) return;
@@ -429,21 +458,21 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="admin-toast__badge">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
           </div>
-          <span class="admin-toast__title">Novo Agendamento!</span>
+          <span class="admin-toast__title">Novo Agendamento na Tela!</span>
         </div>
         <button type="button" class="admin-toast__close" aria-label="Fechar notificação">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
       </div>
       <div class="admin-toast__body">
-        <div class="admin-toast__pet-name">🐾 ${escapeHtml(app.petName || 'Pet')}</div>
+        <div class="admin-toast__pet-name">🐾 ${escapeHtml(app.petName || 'Pet')} ${app.petBreed ? `<small style="font-weight:normal;color:#64748b;">(${escapeHtml(app.petBreed)})</small>` : ''}</div>
         <div class="admin-toast__details">
           <strong>${escapeHtml(app.service || 'Serviço')}</strong><br>
-          Cliente: ${escapeHtml(app.clientName || 'Cliente')}
+          Tutor: ${escapeHtml(app.clientName || 'Cliente')}
         </div>
         <div class="admin-toast__footer">
           <span class="admin-toast__time">📅 ${app.date} às ${app.time}</span>
-          <button type="button" class="admin-toast__action" id="btnToastView">Ver no painel</button>
+          <button type="button" class="admin-toast__action" id="btnToastView">Ver no Painel &rarr;</button>
         </div>
       </div>
     `;
@@ -462,7 +491,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewBtn = toast.querySelector('#btnToastView');
     if (viewBtn) {
       viewBtn.addEventListener('click', () => {
-        // Se a data for hoje, seleciona aba hoje, senão semana ou todos
         if (app.date === todayISO) {
           activeDateFilter = 'hoje';
         } else if (app.date === tomorrowISO) {
@@ -477,6 +505,12 @@ document.addEventListener('DOMContentLoaded', () => {
         dismiss();
       });
     }
+
+    // Auto dismiss após 12 segundos
+    setTimeout(dismiss, 12000);
+
+    toastContainer.appendChild(toast);
+  }
 
     // Auto dismiss após 8 segundos
     setTimeout(dismiss, 8000);
