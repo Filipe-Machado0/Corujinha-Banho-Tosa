@@ -8,89 +8,14 @@ const SUPABASE_CONFIG = {
   anonKey: 'sb_publishable_KV-QpkWj2NwE7GqwmEU6cA_IoVnVdr9'
 };
 
-const BOOKING_STORE_KEY = 'corujinha_appointments_v1';
-const BLOCKED_SLOTS_KEY = 'corujinha_blocked_slots_v1';
+const BOOKING_STORE_KEY = 'corujinha_appointments_v2';
+const BLOCKED_SLOTS_KEY = 'corujinha_blocked_slots_v2';
 
 // Horários de atendimento padrão
 const DEFAULT_SLOTS = [
   '08:30', '09:30', '10:30', '11:30',
   '13:30', '14:30', '15:30', '16:30', '17:30'
 ];
-
-// Dados de exemplo locais (caso o banco esteja iniciando vazio)
-function getInitialSampleAppointments() {
-  const today = new Date();
-  const formatDate = (d) => d.toISOString().split('T')[0];
-  
-  const d0 = formatDate(today);
-  
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  const d1 = formatDate(tomorrow);
-
-  const afterTomorrow = new Date(today);
-  afterTomorrow.setDate(afterTomorrow.getDate() + 2);
-  const d2 = formatDate(afterTomorrow);
-
-  return [
-    {
-      id: 'CRJ-1082',
-      clientName: 'Mariana Camargo',
-      clientPhone: '(15) 99123-4567',
-      petName: 'Thor',
-      petBreed: 'Golden Retriever',
-      petSize: 'Grande (25kg+)',
-      service: 'Banho Especial & Hidratação',
-      date: d0,
-      time: '09:30',
-      status: 'confirmado',
-      notes: 'Muito dócil, adora escovação.',
-      createdAt: new Date().toISOString()
-    },
-    {
-      id: 'CRJ-1083',
-      clientName: 'Rodrigo Silva',
-      clientPhone: '(15) 99876-5432',
-      petName: 'Bob',
-      petBreed: 'Shih-tzu',
-      petSize: 'Pequeno (até 10kg)',
-      service: 'Tosa Bebê & Banho',
-      date: d0,
-      time: '14:30',
-      status: 'confirmado',
-      notes: 'Cuidado extra nas orelhinhas.',
-      createdAt: new Date().toISOString()
-    },
-    {
-      id: 'CRJ-1084',
-      clientName: 'Camila Rocha',
-      clientPhone: '(15) 99765-1122',
-      petName: 'Mel',
-      petBreed: 'Poodle',
-      petSize: 'Médio (10 a 25kg)',
-      service: 'Tosa Higiênica & Banho',
-      date: d1,
-      time: '10:30',
-      status: 'confirmado',
-      notes: '',
-      createdAt: new Date().toISOString()
-    },
-    {
-      id: 'CRJ-1085',
-      clientName: 'Fernanda Lima',
-      clientPhone: '(15) 99654-8899',
-      petName: 'Pipoca',
-      petBreed: 'Spitz Alemão',
-      petSize: 'Pequeno (até 10kg)',
-      service: 'Banho Especial',
-      date: d2,
-      time: '15:30',
-      status: 'confirmado',
-      notes: 'Usar shampoo hipoalergênico.',
-      createdAt: new Date().toISOString()
-    }
-  ];
-}
 
 // Conversores entre o formato do Frontend e as colunas do Supabase
 function mapFromSupabase(row) {
@@ -134,6 +59,11 @@ const BookingStore = {
 
   // Inicializa dados locais e conexão na nuvem
   init() {
+    try {
+      localStorage.removeItem('corujinha_appointments_v1');
+      localStorage.removeItem('corujinha_blocked_slots_v1');
+    } catch (e) {}
+
     if (!localStorage.getItem(BOOKING_STORE_KEY)) {
       localStorage.setItem(BOOKING_STORE_KEY, JSON.stringify([]));
     }

@@ -540,6 +540,100 @@ document.addEventListener('DOMContentLoaded', () => {
     triggerTabTitleAlert(app.petName || 'Agendamento');
   });
 
+  // ========================================================================
+  // CONTROLE DE AUTENTICAÇÃO / LOGIN DO PAINEL
+  // ========================================================================
+  const AUTH_KEY = 'corujinha_admin_auth_v1';
+  const VALID_USER = 'admincorujinha1';
+  const VALID_PASS = 'corujinha2026';
+
+  const loginScreen = document.getElementById('adminLoginScreen');
+  const loginForm = document.getElementById('adminLoginForm');
+  const loginUserInput = document.getElementById('loginUsername');
+  const loginPassInput = document.getElementById('loginPassword');
+  const loginRememberMe = document.getElementById('loginRememberMe');
+  const loginErrorMessage = document.getElementById('loginErrorMessage');
+  const btnTogglePassword = document.getElementById('btnTogglePassword');
+  const btnLogoutAdmin = document.getElementById('btnLogoutAdmin');
+
+  function isAuthenticated() {
+    return localStorage.getItem(AUTH_KEY) === 'true' || sessionStorage.getItem(AUTH_KEY) === 'true';
+  }
+
+  function setAuthenticated(remember) {
+    if (remember) {
+      localStorage.setItem(AUTH_KEY, 'true');
+    } else {
+      sessionStorage.setItem(AUTH_KEY, 'true');
+    }
+    if (loginScreen) {
+      loginScreen.classList.add('is-hidden');
+    }
+    renderAll();
+  }
+
+  function logout() {
+    localStorage.removeItem(AUTH_KEY);
+    sessionStorage.removeItem(AUTH_KEY);
+    if (loginScreen) {
+      loginScreen.classList.remove('is-hidden');
+    }
+    if (loginPassInput) loginPassInput.value = '';
+    if (loginErrorMessage) loginErrorMessage.style.display = 'none';
+    if (loginUserInput) loginUserInput.focus();
+  }
+
+  // Verifica estado inicial de login
+  if (!isAuthenticated()) {
+    if (loginScreen) loginScreen.classList.remove('is-hidden');
+  } else {
+    if (loginScreen) loginScreen.classList.add('is-hidden');
+  }
+
+  // Toggle mostrar/ocultar senha
+  if (btnTogglePassword && loginPassInput) {
+    btnTogglePassword.addEventListener('click', () => {
+      const isPass = loginPassInput.type === 'password';
+      loginPassInput.type = isPass ? 'text' : 'password';
+      btnTogglePassword.style.color = isPass ? 'var(--royal-main)' : '#94a3b8';
+    });
+  }
+
+  // Submissão do login
+  if (loginForm) {
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const user = (loginUserInput.value || '').trim();
+      const pass = (loginPassInput.value || '').trim();
+
+      if (user === VALID_USER && pass === VALID_PASS) {
+        if (loginErrorMessage) loginErrorMessage.style.display = 'none';
+        const remember = loginRememberMe ? loginRememberMe.checked : true;
+        setAuthenticated(remember);
+      } else {
+        if (loginErrorMessage) {
+          loginErrorMessage.style.display = 'flex';
+          loginErrorMessage.classList.remove('admin-login-error');
+          void loginErrorMessage.offsetWidth;
+          loginErrorMessage.classList.add('admin-login-error');
+        }
+        if (loginPassInput) {
+          loginPassInput.value = '';
+          loginPassInput.focus();
+        }
+      }
+    });
+  }
+
+  // Botão Sair
+  if (btnLogoutAdmin) {
+    btnLogoutAdmin.addEventListener('click', () => {
+      if (confirm('Deseja realmente sair do Painel de Atendimentos?')) {
+        logout();
+      }
+    });
+  }
+
   // Inicializa renderização
   renderAll();
 });
