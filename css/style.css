@@ -1022,6 +1022,46 @@ button {
 }
 
 
+/* Aviso / Política de Cancelamento de Banho */
+.cancellation-policy-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.15rem;
+    margin-top: 2.5rem;
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-left: 5px solid #F59E0B;
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 4px 15px -3px rgba(245, 158, 11, 0.08);
+}
+
+.cancellation-policy-box__icon {
+    flex-shrink: 0;
+    color: #D97706;
+    margin-top: 2px;
+}
+
+.cancellation-policy-box__title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #92400E;
+    margin-bottom: 0.35rem;
+    font-family: var(--font-heading);
+}
+
+.cancellation-policy-box__text {
+    font-size: 0.94rem;
+    line-height: 1.6;
+    color: #78350F;
+}
+
+.cancellation-policy-box__text strong {
+    color: #92400E;
+    font-weight: 700;
+}
+
+
 /* ============================================
    AVALIAÇÕES DO GOOGLE
 ============================================= */

@@ -26,6 +26,7 @@
     if (service.includes('Máquina') || service.includes('Maquina')) return 'R$ 110,00';
     if (service.includes('Bebê') || service.includes('Bebe') || service.includes('Tesoura')) return 'R$ 130,00';
     if (service.includes('Táxi') || service.includes('Taxi')) return 'Sem taxa na cidade (bairros a consultar)';
+    if (petSize.includes('Mini')) return 'R$ 55,00';
     if (petSize.includes('Pequeno')) return 'R$ 75,00';
     if (petSize.includes('Médio') || petSize.includes('Medio')) return 'R$ 100,00';
     if (petSize.includes('Grande')) return 'A partir de R$ 150,00';
@@ -104,7 +105,7 @@
                   <div class="option-card-radio__content">
                     <div class="option-card-radio__main">
                       <strong>Banho com Tosa Higiênica (Linha Hydra)</strong>
-                      <span>Completo: corte de unhas, limpeza de ouvidos e produtos Hydra (R$ 75 a R$ 200+)</span>
+                      <span>Completo: corte de unhas, limpeza de ouvidos e produtos Hydra (R$ 55 a R$ 200+)</span>
                     </div>
                     <div class="option-card-radio__indicator"></div>
                   </div>
@@ -143,59 +144,18 @@
                   </div>
                 </label>
               </div>
-                    <div class="option-card-radio__indicator"></div>
-                  </div>
-                </label>
-
-                <label class="option-card-radio">
-                  <input type="radio" name="bookingService" value="Banho &amp; Tosa Geral">
-                  <div class="option-card-radio__content">
-                    <div class="option-card-radio__main">
-                      <strong>Banho &amp; Tosa Geral</strong>
-                      <span>Tosa na máquina/tesoura para alívio do calor e higiene completa</span>
-                    </div>
-                    <div class="option-card-radio__indicator"></div>
-                  </div>
-                </label>
-
-                <label class="option-card-radio">
-                  <input type="radio" name="bookingService" value="Tosa Bebê &amp; Banho">
-                  <div class="option-card-radio__content">
-                    <div class="option-card-radio__main">
-                      <strong>Tosa Bebê &amp; Banho</strong>
-                      <span>Corte artesanal na tesoura, pelagem fofa e acabamento de filhote</span>
-                    </div>
-                    <div class="option-card-radio__indicator"></div>
-                  </div>
-                </label>
-
-                <label class="option-card-radio">
-                  <input type="radio" name="bookingService" value="Tosa Higiênica &amp; Banho">
-                  <div class="option-card-radio__content">
-                    <div class="option-card-radio__main">
-                      <strong>Tosa Higiênica &amp; Banho</strong>
-                      <span>Patinhas (coxins), região íntima e olhos + banho relaxante</span>
-                    </div>
-                    <div class="option-card-radio__indicator"></div>
-                  </div>
-                </label>
-
-                <label class="option-card-radio">
-                  <input type="radio" name="bookingService" value="Banho &amp; Hidratação Profunda">
-                  <div class="option-card-radio__content">
-                    <div class="option-card-radio__main">
-                      <strong>Banho &amp; Hidratação Profunda</strong>
-                      <span>Nutrição intensiva, brilho espelhado e desembaraço de nós</span>
-                    </div>
-                    <div class="option-card-radio__indicator"></div>
-                  </div>
-                </label>
-              </div>
 
               <h4 class="step-instruction" style="margin-top: 18px;">Qual o porte do pet?</h4>
               <p class="step-hint">Isso ajuda a equipe a reservar o tempo ideal de secagem:</p>
 
               <div class="pet-size-selector" id="sizeOptions">
+                <label class="size-pill-radio">
+                  <input type="radio" name="petSize" value="Mini (pelo curto, ex: Pinscher)">
+                  <div class="size-pill-radio__box">
+                    <strong>Mini (Curto)</strong>
+                    <span>Ex: Pinscher &bull; R$ 55</span>
+                  </div>
+                </label>
                 <label class="size-pill-radio">
                   <input type="radio" name="petSize" value="Pequeno (até 10kg)" checked>
                   <div class="size-pill-radio__box">
@@ -222,22 +182,6 @@
                   <div class="size-pill-radio__box">
                     <strong>Gigante</strong>
                     <span>40kg+ &bull; A partir R$ 200</span>
-                  </div>
-                </label>
-              </div>
-                </label>
-                <label class="size-pill-radio">
-                  <input type="radio" name="petSize" value="Médio (10 a 25kg)">
-                  <div class="size-pill-radio__box">
-                    <strong>Médio</strong>
-                    <span>10 a 25kg</span>
-                  </div>
-                </label>
-                <label class="size-pill-radio">
-                  <input type="radio" name="petSize" value="Grande (25kg+)">
-                  <div class="size-pill-radio__box">
-                    <strong>Grande</strong>
-                    <span>25kg ou mais</span>
                   </div>
                 </label>
               </div>
@@ -294,6 +238,10 @@
               <div class="form-row">
                 <label for="inputNotes">Observações Especiais (Opcional)</label>
                 <textarea id="inputNotes" rows="2" placeholder="Ex: tem medo de secador, velhinho, alérgico a perfumes fortes..."></textarea>
+              </div>
+
+              <div style="margin-top: 14px; padding: 10px 14px; background: #FFFBEB; border: 1px solid #FDE68A; border-left: 4px solid #F59E0B; border-radius: 8px; font-size: 0.82rem; color: #92400E; line-height: 1.45;">
+                ⚠️ <strong>Aviso importante:</strong> Para mantermos o atendimento sem filas, cancelamentos devem ser feitos com no mínimo <strong>24h de antecedência</strong>. Agendamentos não desmarcados no prazo terão cobrança de <strong>30% do valor</strong>.
               </div>
             </div>
 
@@ -531,6 +479,9 @@
         <strong>Tutor:</strong>
         <span>${record.clientName}</span>
       </div>
+      <div style="margin-top: 12px; padding: 10px 12px; background: #FFFBEB; border: 1px solid #FCD34D; border-radius: 8px; font-size: 0.80rem; color: #92400E; line-height: 1.4;">
+        ⚠️ <strong>Política de Cancelamento:</strong> Desmarcações devem ser feitas com pelo menos <strong>24h de antecedência</strong>. Caso contrário, será cobrado <strong>30% do valor combinado</strong>.
+      </div>
     `;
 
     // Monta link oficial do WhatsApp
@@ -542,6 +493,7 @@
       `📅 *Data:* ${formatHumanDate(record.date)} às ${record.time}\n` +
       `👤 *Tutor:* ${record.clientName}\n` +
       (record.notes ? `📝 *Observação:* ${record.notes}\n\n` : `\n`) +
+      `⚠️ *Aviso:* Ciente de que desmarcações com menos de 24h de antecedência terão taxa de 30% do valor.\n\n` +
       `Obrigado(a)!`;
     const encodedMsg = encodeURIComponent(msg);
     const waBtn = document.getElementById('btnWhatsAppConfirmSend');
