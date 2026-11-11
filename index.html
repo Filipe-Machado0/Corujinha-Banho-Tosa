@@ -41,12 +41,13 @@
             <ul class="nav__menu" id="navMenu">
                 <li><a href="#inicio" class="nav__link active">Início</a></li>
                 <li><a href="#sobre" class="nav__link">Sobre</a></li>
-                <li><a href="#servicos" class="nav__link">Serviços</a></li>
+                <li><a href="#galeria" class="nav__link">Galeria</a></li>
+                <li><a href="#servicos" class="nav__link">Serviços &amp; Valores</a></li>
                 <li><a href="#avaliacoes" class="nav__link">Avaliações</a></li>
                 <li><a href="#contato" class="nav__link">Contato</a></li>
                 <li class="nav__menu-cta-mobile">
-                    <a href="https://wa.me/5515997500417?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio%20para%20meu%20pet." class="btn btn--card-whatsapp" target="_blank" rel="noopener noreferrer">
-                        <span>Agendar no WhatsApp</span>
+                    <a href="https://wa.me/5515997500417?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio%20para%20meu%20pet." class="btn btn--card-whatsapp js-trigger-booking">
+                        <span>Agendar Horário</span>
                     </a>
                 </li>
             </ul>
@@ -175,23 +176,270 @@
 
 
     <!-- ============================================
-         SERVIÇOS (COM BOTÃO DE WHATSAPP PRÉ-DEFINIDO)
+         GALERIA / CARROSSEL DE CLIENTES REAIS
+    ============================================= -->
+    <section class="section galeria" id="galeria">
+        <div class="container">
+            <div class="section__header reveal">
+                <span class="section__label">Galeria de Focinhos Felizes</span>
+                <h2 class="section__title">Nossos Clientes Apaixonantes</h2>
+                <p class="section__subtitle">Veja os resultados reais de cuidado, carinho e produtos da linha Hydra nos pets atendidos na Corujinha</p>
+            </div>
+
+            <div class="carousel-container reveal" id="corujinhaCarouselContainer">
+                <!-- Carousel Track -->
+                <div class="carousel-track" id="corujinhaCarouselTrack" tabindex="0" role="region" aria-label="Carrossel de fotos dos pets da Corujinha">
+                    
+                    <!-- Card 1: Banho Hydra -->
+                    <article class="carousel-card">
+                        <div class="carousel-card__media">
+                            <img src="assets/images/pet-banho-hydra.jpg" alt="Border Collie tomando banho relaxante com espuma da Linha Hydra" class="carousel-card__img" loading="lazy">
+                            <span class="carousel-card__badge carousel-card__badge--hydra">Linha Hydra Oficial</span>
+                        </div>
+                        <div class="carousel-card__body">
+                            <h3 class="carousel-card__title">Banho Relaxante Hydra</h3>
+                            <p class="carousel-card__text">Espuma cremosa, água na temperatura ideal e cosméticos hipoalergênicos da melhor linha do mercado pet.</p>
+                            <div class="carousel-card__footer">
+                                <span class="carousel-card__tag">
+                                    <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    Higiene &amp; Hidratação
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 2: Pinscher Estiloso -->
+                    <article class="carousel-card">
+                        <div class="carousel-card__media">
+                            <img src="assets/images/pet-pinscher-verde.jpg" alt="Pinscher porte pequeno com colar de pérolas e lacinho" class="carousel-card__img" loading="lazy">
+                            <span class="carousel-card__badge">Porte Pequeno &bull; R$ 75</span>
+                        </div>
+                        <div class="carousel-card__body">
+                            <h3 class="carousel-card__title">Pinscher Estiloso</h3>
+                            <p class="carousel-card__text">Atendimento paciente, tosa higiênica precisa, unhas aparadas sem dor e adereço artesanal exclusivo.</p>
+                            <div class="carousel-card__footer">
+                                <span class="carousel-card__tag">
+                                    <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    Cuidado Delicado
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 3: Shih Tzu Penteado Glamour -->
+                    <article class="carousel-card">
+                        <div class="carousel-card__media">
+                            <img src="assets/images/pet-shihtzu-luxo.jpg" alt="Shih Tzu com penteado de tranças e pedras de strass" class="carousel-card__img" loading="lazy">
+                            <span class="carousel-card__badge carousel-card__badge--gold">Acabamento Luxo</span>
+                        </div>
+                        <div class="carousel-card__body">
+                            <h3 class="carousel-card__title">Penteado Glamour &amp; Strass</h3>
+                            <p class="carousel-card__text">Trancinhas feitas à mão com presilhas especiais e laço pink, pelagem desembaraçada e com brilho espelhado.</p>
+                            <div class="carousel-card__footer">
+                                <span class="carousel-card__tag">
+                                    <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    Arte &amp; Estilo
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 4: Shih Tzu Tosa Bebê -->
+                    <article class="carousel-card">
+                        <div class="carousel-card__media">
+                            <img src="assets/images/pet-shihtzu-leao.jpg" alt="Shih Tzu com tosa bebê na tesoura e gravata de leãozinho" class="carousel-card__img" loading="lazy">
+                            <span class="carousel-card__badge carousel-card__badge--pink">Tosa Bebê &bull; R$ 130</span>
+                        </div>
+                        <div class="carousel-card__body">
+                            <h3 class="carousel-card__title">Shih Tzu Tosa Bebê</h3>
+                            <p class="carousel-card__text">Corte artesanal modelado na tesoura com carinha de filhote, contorno suave e gravatinha de leãozinho.</p>
+                            <div class="carousel-card__footer">
+                                <span class="carousel-card__tag">
+                                    <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    Tesoura de Precisão
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 5: Pastor Alemão -->
+                    <article class="carousel-card">
+                        <div class="carousel-card__media">
+                            <img src="assets/images/pet-pastor-alemao.jpg" alt="Pastor Alemão porte grande com gravata verde pós-banho" class="carousel-card__img" loading="lazy">
+                            <span class="carousel-card__badge">Porte Grande &bull; A partir R$ 150</span>
+                        </div>
+                        <div class="carousel-card__body">
+                            <h3 class="carousel-card__title">Pastor Alemão Impecável</h3>
+                            <p class="carousel-card__text">Banho completo com remoção de subpelo solto, limpeza auricular, secagem profunda e gravata verde.</p>
+                            <div class="carousel-card__footer">
+                                <span class="carousel-card__tag">
+                                    <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    Pelagem Saudável
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 6: Golden Mix -->
+                    <article class="carousel-card">
+                        <div class="carousel-card__media">
+                            <img src="assets/images/pet-golden-mix.jpg" alt="Cão porte médio sorridente com gravata Monstros S.A." class="carousel-card__img" loading="lazy">
+                            <span class="carousel-card__badge">Porte Médio &bull; R$ 100</span>
+                        </div>
+                        <div class="carousel-card__body">
+                            <h3 class="carousel-card__title">Golden Mix Sorridente</h3>
+                            <p class="carousel-card__text">Pelagem hidratada e macia, escovação desembaraçante e gravatinha temática Monstros S.A.</p>
+                            <div class="carousel-card__footer">
+                                <span class="carousel-card__tag">
+                                    <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    Alegria &amp; Conforto
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 7: Rottweiler Meiga -->
+                    <article class="carousel-card">
+                        <div class="carousel-card__media">
+                            <img src="assets/images/pet-rottweiler-rosa.jpg" alt="Rottweiler fêmea porte gigante com laço rosa e florzinhas" class="carousel-card__img" loading="lazy">
+                            <span class="carousel-card__badge">Porte Gigante &bull; A partir R$ 200</span>
+                        </div>
+                        <div class="carousel-card__body">
+                            <h3 class="carousel-card__title">Rottweiler Doce &amp; Meiga</h3>
+                            <p class="carousel-card__text">Manejo carinhoso e calmo com cães gigantes, banho revigorante e laço rosa com florzinhas delicadas.</p>
+                            <div class="carousel-card__footer">
+                                <span class="carousel-card__tag">
+                                    <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    Amor Sem Tamanho
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 8: Dupla Shih Tzu -->
+                    <article class="carousel-card">
+                        <div class="carousel-card__media">
+                            <img src="assets/images/pet-dupla-shihtzu.jpg" alt="Dupla de Shih Tzus sorridentes com golas temáticas" class="carousel-card__img" loading="lazy">
+                            <span class="carousel-card__badge carousel-card__badge--gold">Cuidado em Dobro</span>
+                        </div>
+                        <div class="carousel-card__body">
+                            <h3 class="carousel-card__title">Dupla Inseparável</h3>
+                            <p class="carousel-card__text">Banhos e tosas higiênicas em sintonia com total acolhimento, saíram cheirosos e com golas natalinas.</p>
+                            <div class="carousel-card__footer">
+                                <span class="carousel-card__tag">
+                                    <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    Amigos da Corujinha
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 9: Golden Retriever Scooby -->
+                    <article class="carousel-card">
+                        <div class="carousel-card__media">
+                            <img src="assets/images/pet-golden-scooby.jpg" alt="Golden Retriever radiante com gravata Scooby-Doo pós-banho Hydra" class="carousel-card__img" loading="lazy">
+                            <span class="carousel-card__badge">Porte Grande &bull; A partir R$ 150</span>
+                        </div>
+                        <div class="carousel-card__body">
+                            <h3 class="carousel-card__title">Golden Retriever Radiante</h3>
+                            <p class="carousel-card__text">Pelagem dourada reluzente tratada com linha Hydra, unhas aparadas e gravata do Scooby-Doo.</p>
+                            <div class="carousel-card__footer">
+                                <span class="carousel-card__tag">
+                                    <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    Pelagem Espelhada
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 10: Trio Patrulha Canina -->
+                    <article class="carousel-card">
+                        <div class="carousel-card__media">
+                            <img src="assets/images/pet-trio-patrulha.jpg" alt="Trio de cães clientes da Corujinha com gravatas da Patrulha Canina" class="carousel-card__img" loading="lazy">
+                            <span class="carousel-card__badge carousel-card__badge--gold">Família VIP</span>
+                        </div>
+                        <div class="carousel-card__body">
+                            <h3 class="carousel-card__title">Trio Patrulha Canina</h3>
+                            <p class="carousel-card__text">Trio animado pronto para o passeio, todos higienizados, perfumados e com gravatinhas coordenadas.</p>
+                            <div class="carousel-card__footer">
+                                <span class="carousel-card__tag">
+                                    <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    Família Protegida
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Carousel Controls -->
+                <div class="carousel-controls">
+                    <button class="carousel-btn" id="carouselPrevBtn" aria-label="Foto anterior">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Navegação das fotos"></div>
+                    <button class="carousel-btn" id="carouselNextBtn" aria-label="Próxima foto">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============================================
+         SERVIÇOS E VALORES (LINHA HYDRA & TÁXI DOG)
     ============================================= -->
     <section class="section section--alt servicos" id="servicos">
         <div class="container">
             <div class="section__header reveal">
-                <span class="section__label">O que realizamos</span>
-                <h2 class="section__title">Nossos Serviços</h2>
-                <p class="section__subtitle">Escolha o serviço desejado e fale diretamente no WhatsApp para agendar</p>
+                <span class="section__label">Tabela Transparente &amp; Qualidade Superior</span>
+                <h2 class="section__title">Nossos Serviços &amp; Valores</h2>
+                <p class="section__subtitle">Exclusividade com a linha Hydra, sem taxa de táxi dog na cidade e atendimento calmo sem estresse</p>
             </div>
 
+            <!-- Hydra Authority Banner -->
+            <div class="hydra-banner reveal">
+                <div class="hydra-banner__content">
+                    <div class="hydra-banner__badge">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <span>Padrão Ouro em Estética Pet</span>
+                    </div>
+                    <h3 class="hydra-banner__title">Trabalhamos com a Linha Hydra, a melhor do mercado pet!</h3>
+                    <p class="hydra-banner__text">
+                        Não economizamos na saúde do seu melhor amigo. Utilizamos produtos profissionais da <strong>Linha Hydra</strong>, referência internacional de cosmética animal: fórmulas hipoalergênicas, hidratação de alta performance, proteção da barreira cutânea e perfumes suaves de longa fixação.
+                    </p>
+                    <div class="hydra-banner__tags">
+                        <span class="hydra-tag">
+                            <svg class="check-svg" style="color:#FDE68A;width:15px;height:15px;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            100% Linha Hydra Original
+                        </span>
+                        <span class="hydra-tag">
+                            <svg class="check-svg" style="color:#FDE68A;width:15px;height:15px;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            Dermatologicamente Testado
+                        </span>
+                        <span class="hydra-tag">
+                            <svg class="check-svg" style="color:#FDE68A;width:15px;height:15px;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            Água na Temperatura Ideal
+                        </span>
+                        <span class="hydra-tag">
+                            <svg class="check-svg" style="color:#FDE68A;width:15px;height:15px;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            Secagem Suave sem Pânico
+                        </span>
+                    </div>
+                </div>
+                <div class="hydra-banner__side-badge">
+                    <strong>HYDRA</strong>
+                    <span>Cosmética Pet Nº 1</span>
+                </div>
+            </div>
+
+            <!-- Grid de 4 Serviços -->
             <div class="servicos__grid">
-                <!-- Card 1: Banho -->
+                <!-- Card 1: Banho com Tosa Higiênica -->
                 <article class="service-card reveal">
                     <div class="service-card__top">
                         <div class="service-card__icon-box">
-                            <!-- Ícone SVG Banho / Água -->
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M4 12h16"></path>
                                 <path d="M5 12a7 7 0 0 1 14 0v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-4z"></path>
                                 <path d="M7 12V8a5 5 0 0 1 10 0v4"></path>
@@ -199,56 +447,70 @@
                                 <line x1="15" y1="21" x2="15" y2="23"></line>
                             </svg>
                         </div>
-                        <span class="service-card__pill">Higiene Completa</span>
+                        <span class="service-card__pill service-card__pill--highlight">Mais Pedido</span>
                     </div>
 
-                    <h3 class="service-card__title">Banho</h3>
+                    <h3 class="service-card__title">Banho com Tosa Higiênica</h3>
                     <p class="service-card__description">
-                        Higienização minuciosa e relaxante para cães e gatos. Realizado com água morna, produtos específicos para cada tipo de pelagem e secagem atenciosa.
+                        Tratamento completo de higienização com produtos oficiais Hydra. Inclui tosa higiênica preventiva nas patinhas e região íntima, corte seguro de unhas e limpeza delicada dos ouvidos.
                     </p>
+
+                    <!-- Tabela de valores por porte -->
+                    <div class="service-tiers">
+                        <span class="service-tiers__title">Valores por Porte:</span>
+                        <div class="service-tier-row">
+                            <span class="service-tier-row__name">Porte Pequeno (até 10kg)</span>
+                            <span class="service-tier-row__price">R$ 75,00</span>
+                        </div>
+                        <div class="service-tier-row">
+                            <span class="service-tier-row__name">Porte Médio (10 a 25kg)</span>
+                            <span class="service-tier-row__price">R$ 100,00</span>
+                        </div>
+                        <div class="service-tier-row">
+                            <span class="service-tier-row__name">Porte Grande (25 a 40kg)</span>
+                            <span class="service-tier-row__price">A partir de R$ 150,00</span>
+                        </div>
+                        <div class="service-tier-row">
+                            <span class="service-tier-row__name">Porte Gigante (40kg+)</span>
+                            <span class="service-tier-row__price">A partir de R$ 200,00</span>
+                        </div>
+                    </div>
 
                     <ul class="service-card__checklist">
                         <li>
                             <svg class="check-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                            <span>Shampoo e condicionador neutros e dermatológicos</span>
+                            <span>Banho relaxante com shampoo e condicionador Hydra</span>
                         </li>
                         <li>
                             <svg class="check-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                            <span>Limpeza auricular e corte de unhas</span>
+                            <span>Tosa higiênica preventiva (patas, barriga e região íntima)</span>
                         </li>
                         <li>
                             <svg class="check-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                            <span>Secagem completa e escovação preventiva de nós</span>
+                            <span>Corte de unhas e limpeza de ouvido com algodão ortopédico</span>
                         </li>
                         <li>
                             <svg class="check-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                            <span>Toque final com cheirinho suave e adereço</span>
+                            <span>Secagem atenciosa, escovação e adereço exclusivo</span>
                         </li>
                     </ul>
 
                     <div class="service-card__footer">
                         <div class="service-card__price-box">
-                            <span class="price-label">Valor</span>
-                            <span class="price-tag">A consultar</span>
+                            <span class="price-label">Valor do Banho</span>
+                            <span class="price-tag">A partir de R$ 75,00</span>
                         </div>
-
-                        <!-- Botão com redirecionamento direto no WhatsApp -->
-                        <a href="https://wa.me/5515997500417?text=Ol%C3%A1%2C%20gostaria%20de%20consultar%20valores%20e%20agendar%20um%20Banho%20para%20o%20meu%20pet." class="btn btn--card-whatsapp" target="_blank" rel="noopener noreferrer">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.072.043.419-.101.824z"/>
-                                <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.988-1.309A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.167c-1.634 0-3.15-.487-4.42-1.325l-.317-.208-2.961.777.79-2.887-.228-.363A8.136 8.136 0 013.833 12c0-4.503 3.664-8.167 8.167-8.167 4.503 0 8.167 3.664 8.167 8.167 0 4.503-3.664 8.167-8.167 8.167z"/>
-                            </svg>
+                        <a href="https://wa.me/5515997500417?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20um%20Banho%20com%20Tosa%20Higi%C3%AAnica%20para%20o%20meu%20pet." class="btn btn--card-whatsapp js-trigger-booking" data-service="Banho com Tosa Higiênica">
                             <span>Agendar Banho</span>
                         </a>
                     </div>
                 </article>
 
-                <!-- Card 2: Tosa -->
+                <!-- Card 2: Tosa na Máquina -->
                 <article class="service-card reveal">
                     <div class="service-card__top">
                         <div class="service-card__icon-box service-card__icon-box--alt">
-                            <!-- Ícone SVG Tosa / Tesoura -->
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="6" cy="6" r="3"></circle>
                                 <circle cx="6" cy="18" r="3"></circle>
                                 <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
@@ -256,53 +518,141 @@
                                 <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
                             </svg>
                         </div>
-                        <span class="service-card__pill">Estética e Saúde</span>
+                        <span class="service-card__pill">Higiene &amp; Alívio</span>
                     </div>
 
-                    <h3 class="service-card__title">Tosa</h3>
+                    <h3 class="service-card__title">Tosa na Máquina</h3>
                     <p class="service-card__description">
-                        Tosa estética e higiênica adaptada ao padrão de cada raça e às orientações do tutor. Realizada com lâminas esterilizadas e corte preciso na tesoura.
+                        Indicada para alívio térmico, praticidade e eliminação de nós. Realizada com lâminas esterilizadas de padrão profissional, garantindo segurança e corte uniforme.
                     </p>
 
                     <ul class="service-card__checklist">
                         <li>
                             <svg class="check-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                            <span>Tosa higiênica preventiva (patas, barriga e região íntima)</span>
+                            <span>Banho completo relaxante com linha Hydra incluso</span>
                         </li>
                         <li>
                             <svg class="check-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                            <span>Tosa na tesoura ou máquina conforme padrão</span>
+                            <span>Tosa geral na máquina no comprimento desejado</span>
                         </li>
                         <li>
                             <svg class="check-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                            <span>Desembolo seguro respeitando a sensibilidade do animal</span>
+                            <span>Tosa higiênica preventiva e corte de unhas</span>
                         </li>
                         <li>
                             <svg class="check-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                            <span>Acabamento uniforme e harmonioso</span>
+                            <span>Limpeza de ouvidos e finalização perfumada</span>
                         </li>
                     </ul>
 
                     <div class="service-card__footer">
                         <div class="service-card__price-box">
-                            <span class="price-label">Valor</span>
-                            <span class="price-tag">A consultar</span>
+                            <span class="price-label">Valor do Serviço</span>
+                            <span class="price-tag">R$ 110,00</span>
                         </div>
+                        <a href="https://wa.me/5515997500417?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20Tosa%20na%20M%C3%A1quina%20para%20o%20meu%20pet." class="btn btn--card-whatsapp js-trigger-booking" data-service="Tosa na Máquina">
+                            <span>Agendar Tosa na Máquina</span>
+                        </a>
+                    </div>
+                </article>
 
-                        <!-- Botão com redirecionamento direto no WhatsApp -->
-                        <a href="https://wa.me/5515997500417?text=Ol%C3%A1%2C%20gostaria%20de%20consultar%20valores%20e%20agendar%20uma%20Tosa%20para%20o%20meu%20pet." class="btn btn--card-whatsapp" target="_blank" rel="noopener noreferrer">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.072.043.419-.101.824z"/>
-                                <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.988-1.309A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.167c-1.634 0-3.15-.487-4.42-1.325l-.317-.208-2.961.777.79-2.887-.228-.363A8.136 8.136 0 013.833 12c0-4.503 3.664-8.167 8.167-8.167 4.503 0 8.167 3.664 8.167 8.167 0 4.503-3.664 8.167-8.167 8.167z"/>
+                <!-- Card 3: Tosa Bebê na Tesoura -->
+                <article class="service-card reveal">
+                    <div class="service-card__top">
+                        <div class="service-card__icon-box" style="background: #FDF2F8; color: #DB2777;">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
                             </svg>
-                            <span>Agendar Tosa</span>
+                        </div>
+                        <span class="service-card__pill service-card__pill--highlight">Especialidade</span>
+                    </div>
+
+                    <h3 class="service-card__title">Tosa Bebê na Tesoura</h3>
+                    <p class="service-card__description">
+                        Acabamento artesanal e delicado 100% esculpido na tesoura. Mantém a pelagem fofa, aspecto jovem de filhote e respeita a anatomia e estética da raça.
+                    </p>
+
+                    <ul class="service-card__checklist">
+                        <li>
+                            <svg class="check-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>Banho completo relaxante com linha Hydra</span>
+                        </li>
+                        <li>
+                            <svg class="check-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>Desembolo cuidadoso e escovação reconstrutora</span>
+                        </li>
+                        <li>
+                            <svg class="check-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>Modelagem artesanal no rosto, patinhas e corpinho</span>
+                        </li>
+                        <li>
+                            <svg class="check-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>Penteado exclusivo, adereço premium e perfume</span>
+                        </li>
+                    </ul>
+
+                    <div class="service-card__footer">
+                        <div class="service-card__price-box">
+                            <span class="price-label">Valor do Serviço</span>
+                            <span class="price-tag">R$ 130,00</span>
+                        </div>
+                        <a href="https://wa.me/5515997500417?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20Tosa%20Beb%C3%AA%20na%20Tesoura%20para%20o%20meu%20pet." class="btn btn--card-whatsapp js-trigger-booking" data-service="Tosa Bebê na Tesoura">
+                            <span>Agendar Tosa Bebê</span>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Card 4: Táxi Dog Corujinha -->
+                <article class="service-card reveal">
+                    <div class="service-card__top">
+                        <div class="service-card__icon-box" style="background: #ECFDF5; color: #059669;">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="1" y="3" width="15" height="13"></rect>
+                                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                            </svg>
+                        </div>
+                        <span class="service-card__pill service-card__pill--taxi">Sem Taxa na Cidade!</span>
+                    </div>
+
+                    <h3 class="service-card__title">Táxi Dog Corujinha</h3>
+                    <p class="service-card__description">
+                        Buscamos e levamos seu amigo com total comodidade para você. Transporte seguro, climatizado, com caixas individuais higienizadas a cada viagem.
+                    </p>
+
+                    <ul class="service-card__checklist">
+                        <li>
+                            <svg class="check-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span><strong>Sem cobrança de taxa dentro da cidade de Angatuba!</strong></span>
+                        </li>
+                        <li>
+                            <svg class="check-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>Bairros afastados e zonas rurais a consultar</span>
+                        </li>
+                        <li>
+                            <svg class="check-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>Caixas de transporte individuais e higienizadas</span>
+                        </li>
+                        <li>
+                            <svg class="check-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>Motorista com manejo carinhoso e pontualidade garantida</span>
+                        </li>
+                    </ul>
+
+                    <div class="service-card__footer">
+                        <div class="service-card__price-box">
+                            <span class="price-label">Taxa de Transporte</span>
+                            <span class="price-tag" style="color: #059669;">Sem Taxa na Cidade</span>
+                        </div>
+                        <a href="https://wa.me/5515997500417?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20o%20T%C3%A1xi%20Dog%20para%20o%20meu%20pet." class="btn btn--card-whatsapp js-trigger-booking" data-service="Táxi Dog Corujinha">
+                            <span>Solicitar Táxi Dog</span>
                         </a>
                     </div>
                 </article>
             </div>
         </div>
     </section>
-
 
     <!-- ============================================
          AVALIAÇÕES DO GOOGLE

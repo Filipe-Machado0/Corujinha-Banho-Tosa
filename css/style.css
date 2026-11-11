@@ -520,7 +520,326 @@ button {
 
 
 /* ============================================
-   SERVIÇOS (CARDS COM BOTÕES DE REDIRECIONAMENTO)
+   GALERIA / CARROSSEL DE CLIENTES REAIS
+============================================= */
+.galeria {
+    background-color: var(--white);
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 4rem;
+}
+
+.carousel-container {
+    position: relative;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    padding: 1rem .25rem 2rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.carousel-track::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-card {
+    flex: 0 0 290px;
+    max-width: 290px;
+    scroll-snap-align: start;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 8px 24px -4px rgba(20, 96, 168, 0.08), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--slate-200);
+    transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
+    display: flex;
+    flex-direction: column;
+}
+
+.carousel-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 30px -8px rgba(20, 96, 168, 0.18), 0 8px 12px -4px rgba(0, 0, 0, 0.06);
+    border-color: var(--royal-300);
+}
+
+.carousel-card__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 4.8;
+    overflow: hidden;
+    background-color: var(--slate-100);
+}
+
+.carousel-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+    transition: transform .45s var(--ease);
+}
+
+.carousel-card:hover .carousel-card__img {
+    transform: scale(1.05);
+}
+
+.carousel-card__badge {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    background: rgba(12, 35, 64, 0.88);
+    backdrop-filter: blur(8px);
+    color: var(--white);
+    font-size: 0.74rem;
+    font-weight: 800;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+.carousel-card__badge--hydra {
+    background: linear-gradient(135deg, #1460A8, #0C2340);
+    border-color: rgba(245, 158, 11, 0.6);
+    color: #FDE68A;
+}
+
+.carousel-card__badge--gold {
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+    color: var(--white);
+}
+
+.carousel-card__badge--pink {
+    background: linear-gradient(135deg, #DB2777, #BE185D);
+    color: var(--white);
+}
+
+.carousel-card__body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background: var(--white);
+}
+
+.carousel-card__title {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--royal-900);
+    margin-bottom: 0.35rem;
+}
+
+.carousel-card__text {
+    font-size: 0.88rem;
+    color: var(--slate-600);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+}
+
+.carousel-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--slate-100);
+}
+
+.carousel-card__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--royal-600);
+}
+
+/* Controls */
+.carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1rem;
+}
+
+.carousel-btn {
+    width: 2.85rem;
+    height: 2.85rem;
+    border-radius: var(--radius-full);
+    background: var(--white);
+    color: var(--royal-600);
+    border: 2px solid var(--royal-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+    transition: all .2s var(--ease);
+    cursor: pointer;
+}
+
+.carousel-btn:hover:not(:disabled) {
+    background: var(--royal-500);
+    color: var(--white);
+    border-color: var(--royal-500);
+    transform: scale(1.06);
+    box-shadow: 0 6px 16px rgba(20, 96, 168, 0.25);
+}
+
+.carousel-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.carousel-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.carousel-dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: var(--radius-full);
+    background: var(--slate-300);
+    border: none;
+    cursor: pointer;
+    transition: all .3s var(--ease);
+    padding: 0;
+}
+
+.carousel-dot.is-active {
+    width: 1.8rem;
+    background: var(--royal-500);
+    border-radius: var(--radius-full);
+}
+
+
+/* ============================================
+   HYDRA AUTHORITY BANNER
+============================================= */
+.hydra-banner {
+    background: linear-gradient(135deg, #0C2340 0%, #1460A8 100%);
+    border-radius: var(--radius-lg);
+    padding: 2.25rem 2.5rem;
+    color: var(--white);
+    box-shadow: 0 15px 35px -10px rgba(12, 35, 64, 0.35);
+    margin-bottom: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hydra-banner::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.18) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.hydra-banner__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(245, 158, 11, 0.18);
+    border: 1px solid rgba(245, 158, 11, 0.5);
+    color: #FDE68A;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.35rem 0.9rem;
+    border-radius: var(--radius-full);
+    margin-bottom: 0.85rem;
+}
+
+.hydra-banner__title {
+    font-family: var(--font-heading);
+    font-size: 1.65rem;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 0.6rem;
+    color: var(--white);
+}
+
+.hydra-banner__text {
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 720px;
+    margin-bottom: 1.25rem;
+}
+
+.hydra-banner__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.hydra-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.12);
+    padding: 0.35rem 0.8rem;
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.hydra-banner__side-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-md);
+    padding: 1.5rem 1.75rem;
+    min-width: 180px;
+}
+
+.hydra-banner__side-badge strong {
+    font-size: 1.85rem;
+    font-weight: 900;
+    color: #F59E0B;
+    line-height: 1;
+    letter-spacing: 0.04em;
+}
+
+.hydra-banner__side-badge span {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+
+/* ============================================
+   SERVIÇOS (TABELA & CARDS COM BOTÕES)
 ============================================= */
 .servicos__grid {
     display: grid;
@@ -532,7 +851,7 @@ button {
     background: var(--white);
     border: 1px solid var(--slate-200);
     border-radius: var(--radius-lg);
-    padding: 2.5rem;
+    padding: 2.25rem;
     box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
@@ -549,15 +868,15 @@ button {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
 }
 
 .service-card__icon-box {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 4rem;
-    height: 4rem;
+    width: 3.8rem;
+    height: 3.8rem;
     background: var(--royal-50);
     color: var(--royal-500);
     border-radius: var(--radius-md);
@@ -571,34 +890,90 @@ button {
 .service-card__pill {
     font-size: .8rem;
     font-weight: 700;
-    color: var(--slate-500);
+    color: var(--slate-600);
     background: var(--slate-100);
-    padding: .3rem .8rem;
+    padding: .32rem .85rem;
     border-radius: var(--radius-full);
     text-transform: uppercase;
     letter-spacing: .04em;
 }
 
+.service-card__pill--highlight {
+    background: #FEF3C7;
+    color: #B45309;
+}
+
+.service-card__pill--taxi {
+    background: #DCFCE7;
+    color: #15803D;
+    font-weight: 800;
+}
+
 .service-card__title {
     font-family: var(--font-heading);
-    font-size: 1.6rem;
+    font-size: 1.55rem;
     font-weight: 800;
     color: var(--royal-900);
-    margin-bottom: .6rem;
+    margin-bottom: .5rem;
 }
 
 .service-card__description {
-    font-size: .98rem;
+    font-size: .96rem;
     color: var(--slate-600);
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+}
+
+/* Service Tiers list (for Sizes) */
+.service-tiers {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     margin-bottom: 1.5rem;
-    line-height: 1.65;
+    background: var(--royal-50);
+    padding: 1rem 1.15rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--royal-200);
+}
+
+.service-tiers__title {
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--royal-700);
+    margin-bottom: 0.25rem;
+}
+
+.service-tier-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.92rem;
+    color: var(--slate-700);
+    padding: 0.35rem 0;
+    border-bottom: 1px dashed rgba(20, 96, 168, 0.18);
+}
+
+.service-tier-row:last-child {
+    border-bottom: none;
+}
+
+.service-tier-row__name {
+    font-weight: 600;
+}
+
+.service-tier-row__price {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    color: var(--royal-700);
 }
 
 .service-card__checklist {
     display: flex;
     flex-direction: column;
     gap: .75rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.75rem;
     flex-grow: 1;
 }
 
@@ -641,7 +1016,7 @@ button {
 
 .price-tag {
     font-family: var(--font-heading);
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     font-weight: 800;
     color: var(--royal-500);
 }
@@ -1139,8 +1514,28 @@ button {
     }
     .servicos__grid {
         grid-template-columns: 1fr;
-        max-width: 440px;
+        max-width: 540px;
         margin: 0 auto;
+    }
+    .hydra-banner {
+        grid-template-columns: 1fr;
+        padding: 1.75rem 1.25rem;
+        gap: 1.5rem;
+    }
+    .hydra-banner__title {
+        font-size: 1.35rem;
+    }
+    .hydra-banner__side-badge {
+        min-width: 100%;
+        padding: 1rem;
+    }
+    .carousel-card {
+        flex: 0 0 260px;
+        max-width: 260px;
+    }
+    .carousel-btn {
+        width: 2.5rem;
+        height: 2.5rem;
     }
     .service-card {
         padding: 2rem 1.5rem;

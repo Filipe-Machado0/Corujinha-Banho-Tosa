@@ -6,8 +6,9 @@
   const WHATSAPP_NUMBER = '5515997500417'; // WhatsApp oficial da Corujinha
 
   // Estado do agendamento em andamento
+    // Estado do agendamento em andamento
   const bookingState = {
-    service: 'Banho Especial',
+    service: 'Banho com Tosa Higiênica',
     petSize: 'Pequeno (até 10kg)',
     date: '',
     time: '',
@@ -18,6 +19,19 @@
     notes: '',
     currentStep: 1
   };
+
+  // Estimador de preço oficial conforme tabela informada
+  function getEstimatedPrice(service, petSize) {
+    if (!service) return 'A consultar';
+    if (service.includes('Máquina') || service.includes('Maquina')) return 'R$ 110,00';
+    if (service.includes('Bebê') || service.includes('Bebe') || service.includes('Tesoura')) return 'R$ 130,00';
+    if (service.includes('Táxi') || service.includes('Taxi')) return 'Sem taxa na cidade (bairros a consultar)';
+    if (petSize.includes('Pequeno')) return 'R$ 75,00';
+    if (petSize.includes('Médio') || petSize.includes('Medio')) return 'R$ 100,00';
+    if (petSize.includes('Grande')) return 'A partir de R$ 150,00';
+    if (petSize.includes('Gigante')) return 'A partir de R$ 200,00';
+    return 'A consultar';
+  }
 
   // Cria estrutura do modal no DOM se não existir
   function injectModalHTML() {
@@ -86,12 +100,49 @@
 
               <div class="booking-options-grid" id="serviceOptions">
                 <label class="option-card-radio">
-                  <input type="radio" name="bookingService" value="Banho Especial" checked>
+                  <input type="radio" name="bookingService" value="Banho com Tosa Higiênica" checked>
                   <div class="option-card-radio__content">
                     <div class="option-card-radio__main">
-                      <strong>Banho Especial</strong>
-                      <span>Shampoo profissional, ouvidos limpos, unhas cortadas e perfume</span>
+                      <strong>Banho com Tosa Higiênica (Linha Hydra)</strong>
+                      <span>Completo: corte de unhas, limpeza de ouvidos e produtos Hydra (R$ 75 a R$ 200+)</span>
                     </div>
+                    <div class="option-card-radio__indicator"></div>
+                  </div>
+                </label>
+
+                <label class="option-card-radio">
+                  <input type="radio" name="bookingService" value="Tosa na Máquina">
+                  <div class="option-card-radio__content">
+                    <div class="option-card-radio__main">
+                      <strong>Tosa na Máquina</strong>
+                      <span>Banho relaxante Hydra + tosa completa na máquina e unhas (R$ 110,00)</span>
+                    </div>
+                    <div class="option-card-radio__indicator"></div>
+                  </div>
+                </label>
+
+                <label class="option-card-radio">
+                  <input type="radio" name="bookingService" value="Tosa Bebê na Tesoura">
+                  <div class="option-card-radio__content">
+                    <div class="option-card-radio__main">
+                      <strong>Tosa Bebê na Tesoura</strong>
+                      <span>Banho Hydra + corte artesanal na tesoura de precisão (R$ 130,00)</span>
+                    </div>
+                    <div class="option-card-radio__indicator"></div>
+                  </div>
+                </label>
+
+                <label class="option-card-radio">
+                  <input type="radio" name="bookingService" value="Táxi Dog Corujinha">
+                  <div class="option-card-radio__content">
+                    <div class="option-card-radio__main">
+                      <strong>Táxi Dog Corujinha</strong>
+                      <span>Buscamos e levamos com segurança (Sem taxa dentro da cidade!)</span>
+                    </div>
+                    <div class="option-card-radio__indicator"></div>
+                  </div>
+                </label>
+              </div>
                     <div class="option-card-radio__indicator"></div>
                   </div>
                 </label>
@@ -149,8 +200,31 @@
                   <input type="radio" name="petSize" value="Pequeno (até 10kg)" checked>
                   <div class="size-pill-radio__box">
                     <strong>Pequeno</strong>
-                    <span>Até 10kg</span>
+                    <span>Até 10kg &bull; R$ 75</span>
                   </div>
+                </label>
+                <label class="size-pill-radio">
+                  <input type="radio" name="petSize" value="Médio (10 a 25kg)">
+                  <div class="size-pill-radio__box">
+                    <strong>Médio</strong>
+                    <span>10 a 25kg &bull; R$ 100</span>
+                  </div>
+                </label>
+                <label class="size-pill-radio">
+                  <input type="radio" name="petSize" value="Grande (25 a 40kg)">
+                  <div class="size-pill-radio__box">
+                    <strong>Grande</strong>
+                    <span>25 a 40kg &bull; A partir R$ 150</span>
+                  </div>
+                </label>
+                <label class="size-pill-radio">
+                  <input type="radio" name="petSize" value="Gigante (40kg+)">
+                  <div class="size-pill-radio__box">
+                    <strong>Gigante</strong>
+                    <span>40kg+ &bull; A partir R$ 200</span>
+                  </div>
+                </label>
+              </div>
                 </label>
                 <label class="size-pill-radio">
                   <input type="radio" name="petSize" value="Médio (10 a 25kg)">
@@ -430,6 +504,8 @@
 
     // Monta o comprovante visual
     const summaryContainer = document.getElementById('bookingTicketSummary');
+    const estimatedPrice = getEstimatedPrice(record.service, record.petSize);
+
     summaryContainer.innerHTML = `
       <div class="booking-ticket__row">
         <strong>Código do Agendamento:</strong>
@@ -448,6 +524,10 @@
         <span>${formatHumanDate(record.date)} às ${record.time}</span>
       </div>
       <div class="booking-ticket__row">
+        <strong>Valor Estimado:</strong>
+        <span style="font-weight: 800; color: #1460A8;">${estimatedPrice}</span>
+      </div>
+      <div class="booking-ticket__row">
         <strong>Tutor:</strong>
         <span>${record.clientName}</span>
       </div>
@@ -458,11 +538,11 @@
       `📌 *Código:* #${record.id}\n` +
       `🐶 *Pet:* ${record.petName} (${record.petBreed} - ${record.petSize})\n` +
       `✂️ *Serviço:* ${record.service}\n` +
+      `💰 *Valor Estimado:* ${estimatedPrice}\n` +
       `📅 *Data:* ${formatHumanDate(record.date)} às ${record.time}\n` +
       `👤 *Tutor:* ${record.clientName}\n` +
       (record.notes ? `📝 *Observação:* ${record.notes}\n\n` : `\n`) +
       `Obrigado(a)!`;
-
     const encodedMsg = encodeURIComponent(msg);
     const waBtn = document.getElementById('btnWhatsAppConfirmSend');
     waBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`;
@@ -595,13 +675,19 @@
       ) {
         e.preventDefault();
         
-        let preset = 'Banho Especial';
-        if (text.toLowerCase().includes('tosa')) {
-          preset = 'Banho & Tosa Geral';
-        } else if (text.toLowerCase().includes('hidrata')) {
-          preset = 'Banho & Hidratação Profunda';
+        let preset = target.getAttribute('data-service') || '';
+        if (!preset) {
+          const lower = text.toLowerCase();
+          if (lower.includes('máquina') || lower.includes('maquina')) {
+            preset = 'Tosa na Máquina';
+          } else if (lower.includes('bebê') || lower.includes('bebe') || lower.includes('tesoura')) {
+            preset = 'Tosa Bebê na Tesoura';
+          } else if (lower.includes('táxi') || lower.includes('taxi')) {
+            preset = 'Táxi Dog Corujinha';
+          } else {
+            preset = 'Banho com Tosa Higiênica';
+          }
         }
-        
         openModal(preset);
       }
     });
