@@ -75,11 +75,8 @@
           <p class="tour-popover__description" id="tourDescription">Conteúdo</p>
 
           <div class="tour-popover__actions">
-            <button type="button" class="tour-btn tour-btn--skip" id="tourSkipBtn">Pular guia</button>
-            <div class="tour-popover__nav-group">
-              <button type="button" class="tour-btn tour-btn--back" id="tourPrevBtn">Anterior</button>
-              <button type="button" class="tour-btn tour-btn--primary" id="tourNextBtn">Continuar</button>
-            </div>
+            <button type="button" class="tour-btn tour-btn--skip" id="tourSkipBtn">Pular Tutorial</button>
+            <button type="button" class="tour-btn tour-btn--primary" id="tourNextBtn">Continuar</button>
           </div>
         </div>
       </div>
@@ -96,14 +93,12 @@
       if (e.target.id === 'tourBackdrop') endTour(false);
     });
 
-    document.getElementById('tourPrevBtn').addEventListener('click', prevStep);
     document.getElementById('tourNextBtn').addEventListener('click', handleNextAction);
 
     document.addEventListener('keydown', (e) => {
       if (!isTourActive) return;
       if (e.key === 'Escape') endTour(false);
-      if (e.key === 'ArrowRight') handleNextAction();
-      if (e.key === 'ArrowLeft') prevStep();
+      if (e.key === 'ArrowRight' || e.key === 'Enter') handleNextAction();
     });
 
     window.addEventListener('resize', updatePosition, { passive: true });
@@ -169,10 +164,7 @@
     document.getElementById('tourTitle').textContent = step.title;
     document.getElementById('tourDescription').innerHTML = step.content;
 
-    const prevBtn = document.getElementById('tourPrevBtn');
     const nextBtn = document.getElementById('tourNextBtn');
-
-    prevBtn.disabled = (idx === 0);
 
     if (idx === TOUR_STEPS.length - 1) {
       nextBtn.textContent = 'Agendar Horário';

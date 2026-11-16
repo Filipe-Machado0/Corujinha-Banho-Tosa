@@ -210,75 +210,60 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 12px;
     padding-top: 14px;
     border-top: 1px solid var(--slate-100);
 }
 
 .tour-btn {
     font-family: var(--font-body, inherit);
-    border: none;
     border-radius: 8px;
-    font-size: 0.84rem;
+    font-size: 0.86rem;
     cursor: pointer;
     transition: all 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .tour-btn--skip {
-    background: none;
-    color: var(--slate-400);
+    background: #ffffff;
+    border: 1px solid var(--slate-200);
+    color: var(--slate-600);
     font-weight: 600;
-    padding: 6px 0;
+    padding: 8px 16px;
 }
 
 .tour-btn--skip:hover {
-    color: var(--slate-700);
-    text-decoration: underline;
-}
-
-.tour-popover__nav-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.tour-btn--back {
-    background: none;
-    color: var(--slate-600);
-    font-weight: 600;
-    padding: 8px 12px;
-}
-
-.tour-btn--back:hover:not(:disabled) {
-    background: var(--slate-100);
+    background: var(--slate-50);
+    border-color: var(--slate-300);
     color: var(--slate-900);
-}
-
-.tour-btn--back:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
 }
 
 .tour-btn--primary {
     background: var(--royal-500);
+    border: 1px solid var(--royal-500);
     color: #ffffff;
     font-weight: 700;
-    padding: 8px 16px;
-    border-radius: 8px;
+    padding: 8px 18px;
     box-shadow: 0 2px 6px rgba(20, 96, 168, 0.25);
 }
 
 .tour-btn--primary:hover {
     background: var(--royal-600);
+    border-color: var(--royal-600);
     transform: translateY(-1px);
     box-shadow: 0 4px 10px rgba(20, 96, 168, 0.35);
 }
 
 .tour-btn--final {
     background: var(--royal-600);
+    border-color: var(--royal-600);
 }
 
 .tour-btn--final:hover {
     background: var(--royal-700);
+    border-color: var(--royal-700);
 }
 
 /* Adaptação Mobile: Doca limpa na base da tela */
