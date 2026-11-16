@@ -1,57 +1,414 @@
 /* ==========================================================================
    Corujinha Banho & Tosa - Interactive Client Tutorial / Tour Styles
+   (Design System: Azul Royal #1460A8, #0C2340, Nunito + Baloo 2)
    ========================================================================== */
 
-/* ---------- 1. TOUR TRIGGER ELEMENTS IN PAGE ---------- */
+/* ---------- 1. PRIMORDIAL HERO SHOWCASE BANNER ---------- */
+.hero__tutorial-showcase {
+    margin-top: 36px;
+    background: rgba(12, 35, 64, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1.5px solid rgba(147, 197, 253, 0.4);
+    border-radius: 24px;
+    padding: 26px 30px;
+    box-shadow: 0 20px 48px rgba(7, 43, 77, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    text-align: left;
+    width: 100%;
+    max-width: 860px;
+    position: relative;
+    overflow: hidden;
+}
 
-/* Hero Tutorial Trigger Button */
-.hero__tutorial-btn {
+.hero__tutorial-showcase::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #60A5FA, #3B82F6, #1460A8, #60A5FA);
+    background-size: 200% 100%;
+    animation: tutorialGlowGradient 4s linear infinite;
+}
+
+@keyframes tutorialGlowGradient {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+}
+
+.hero__tutorial-showcase-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.hero__tutorial-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.35), rgba(20, 96, 168, 0.45));
+    border: 1px solid rgba(147, 197, 253, 0.5);
+    color: #DBEAFE;
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 5px 14px;
+    border-radius: 999px;
+}
+
+.hero__tutorial-pill svg {
+    color: #93C5FD;
+}
+
+.hero__tutorial-showcase-title {
+    font-family: var(--font-heading, sans-serif);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.25;
+    margin: 0;
+    flex-basis: 100%;
+}
+
+/* Steps Row */
+.hero__tutorial-steps-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 16px 18px;
+    margin-bottom: 22px;
+}
+
+.hero__step-badge-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.step-badge-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3B82F6, #1460A8);
+    color: #ffffff;
+    font-family: var(--font-heading, sans-serif);
+    font-weight: 800;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.hero__step-badge-item strong {
+    display: block;
+    color: #ffffff;
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.hero__step-badge-item span {
+    display: block;
+    color: #93C5FD;
+    font-size: 0.78rem;
+    line-height: 1.3;
+}
+
+.hero__step-arrow {
+    color: rgba(147, 197, 253, 0.6);
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Bottom CTA in Hero */
+.hero__tutorial-showcase-bottom {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.btn--tutorial-hero-play {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    margin-top: 14px;
-    padding: 10px 20px;
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.28);
+    gap: 10px;
+    background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+    border: 1px solid rgba(255, 255, 255, 0.35);
     border-radius: 999px;
     color: #ffffff;
-    font-size: 0.92rem;
-    font-weight: 600;
+    font-family: var(--font-body, inherit);
+    font-size: 0.98rem;
+    font-weight: 800;
+    padding: 13px 26px;
     cursor: pointer;
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.45);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn--tutorial-hero-play:hover {
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(37, 99, 235, 0.6);
+}
+
+.btn--tutorial-hero-play svg {
+    color: #FDE047;
+    transition: transform 0.2s ease;
+}
+
+.btn--tutorial-hero-play:hover svg {
+    transform: scale(1.2);
+}
+
+.hero__tutorial-note {
+    font-size: 0.84rem;
+    color: #BFDBFE;
+    font-weight: 500;
+}
+
+@media (max-width: 820px) {
+    .hero__tutorial-steps-row {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+    .hero__step-arrow {
+        display: none;
+    }
+    .hero__tutorial-showcase {
+        padding: 20px 18px;
+    }
+    .btn--tutorial-hero-play {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ---------- 2. AUTOMATED ONBOARDING WELCOME MODAL (FIRST VISIT) ---------- */
+.tour-onboarding-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10005;
+    background: rgba(12, 35, 64, 0.78);
     backdrop-filter: blur(8px);
-    transition: all 0.25s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.hero__tutorial-btn:hover {
-    background: rgba(255, 255, 255, 0.22);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+.tour-onboarding-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
 }
 
-.hero__tutorial-btn svg {
-    color: #93C5FD;
-    transition: transform 0.25s ease;
+.tour-onboarding-card {
+    background: #ffffff;
+    border-radius: 24px;
+    max-width: 560px;
+    width: 100%;
+    padding: 34px 32px 30px;
+    box-shadow: 0 28px 64px rgba(7, 43, 77, 0.45);
+    position: relative;
+    transform: translateY(24px) scale(0.96);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid #E2E8F0;
+    text-align: left;
 }
 
-.hero__tutorial-btn:hover svg {
-    transform: scale(1.15);
+.tour-onboarding-overlay.is-open .tour-onboarding-card {
+    transform: translateY(0) scale(1);
+}
+
+.tour-onboarding-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--slate-100);
+    border: none;
+    color: var(--slate-500);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tour-onboarding-close:hover {
+    background: var(--slate-200);
+    color: var(--slate-800);
+    transform: rotate(90deg);
+}
+
+.tour-onboarding-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--royal-100);
+    color: var(--royal-700);
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+}
+
+.tour-onboarding-title {
+    font-family: var(--font-heading, sans-serif);
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--royal-900);
+    line-height: 1.2;
+    margin-bottom: 8px;
+}
+
+.tour-onboarding-subtitle {
+    font-size: 0.95rem;
+    color: var(--slate-600);
+    line-height: 1.5;
+    margin-bottom: 22px;
+}
+
+.tour-onboarding-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 26px;
+}
+
+.tour-onboarding-step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    border-radius: 14px;
+    padding: 12px 16px;
+    transition: background 0.2s ease;
+}
+
+.tour-onboarding-step-item:hover {
+    background: var(--royal-50);
+    border-color: var(--royal-200);
+}
+
+.tour-onboarding-step-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--royal-500), var(--royal-700));
     color: #ffffff;
+    font-family: var(--font-heading, sans-serif);
+    font-weight: 800;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
 }
 
-/* Nav Menu Tutorial Link */
+.tour-onboarding-step-info strong {
+    display: block;
+    color: var(--slate-900);
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.tour-onboarding-step-info p {
+    color: var(--slate-600);
+    font-size: 0.84rem;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.tour-onboarding-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn--tour-onboarding-primary {
+    background: linear-gradient(135deg, var(--royal-500) 0%, var(--royal-700) 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-family: var(--font-body, inherit);
+    font-size: 0.98rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    box-shadow: 0 6px 18px rgba(20, 96, 168, 0.35);
+    transition: all 0.2s ease;
+}
+
+.btn--tour-onboarding-primary:hover {
+    background: linear-gradient(135deg, var(--royal-600) 0%, var(--royal-800) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(20, 96, 168, 0.45);
+}
+
+.btn--tour-onboarding-skip {
+    background: transparent;
+    color: var(--slate-600);
+    border: none;
+    font-family: var(--font-body, inherit);
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: color 0.2s ease;
+}
+
+.btn--tour-onboarding-skip:hover {
+    color: var(--slate-900);
+    text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+    .tour-onboarding-card {
+        padding: 24px 20px;
+        border-radius: 20px;
+    }
+    .tour-onboarding-title {
+        font-size: 1.35rem;
+    }
+}
+
+/* ---------- 3. NAV LINK & FLOATING HELPER BADGE ---------- */
 .nav__link--tutorial {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     color: var(--royal-600) !important;
     font-weight: 700 !important;
-}
-
-.nav__link--tutorial::after {
-    background-color: var(--royal-500) !important;
 }
 
 .nav__link--tutorial-badge {
@@ -65,7 +422,6 @@
     text-transform: uppercase;
 }
 
-/* Floating Helper Badge (Bottom-Left) */
 .tour-floating-badge {
     position: fixed;
     bottom: 24px;
@@ -120,134 +476,7 @@
     }
 }
 
-/* ---------- 2. FIRST-VISIT WELCOME PROMPT (TOAST) ---------- */
-.tour-welcome-toast {
-    position: fixed;
-    bottom: 84px;
-    left: 24px;
-    z-index: 9989;
-    max-width: 320px;
-    background: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 16px 36px rgba(12, 35, 64, 0.22), 0 0 0 1px rgba(20, 96, 168, 0.12);
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    opacity: 0;
-    transform: translateY(20px) scale(0.96);
-    pointer-events: none;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.tour-welcome-toast.is-visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    pointer-events: auto;
-}
-
-.tour-welcome-toast__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.tour-welcome-toast__tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.72rem;
-    font-weight: 800;
-    color: var(--royal-600);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.tour-welcome-toast__close {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--slate-400);
-    padding: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: color 0.2s ease;
-}
-
-.tour-welcome-toast__close:hover {
-    color: var(--slate-700);
-}
-
-.tour-welcome-toast__title {
-    font-family: var(--font-heading, sans-serif);
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--slate-900);
-    line-height: 1.25;
-    margin: 0;
-}
-
-.tour-welcome-toast__text {
-    font-size: 0.84rem;
-    color: var(--slate-600);
-    line-height: 1.45;
-    margin: 0;
-}
-
-.tour-welcome-toast__actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 4px;
-}
-
-.tour-welcome-toast__btn-start {
-    flex: 1;
-    background: var(--royal-500);
-    color: #ffffff;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 0.82rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.2s ease;
-    text-align: center;
-}
-
-.tour-welcome-toast__btn-start:hover {
-    background: var(--royal-600);
-}
-
-.tour-welcome-toast__btn-dismiss {
-    background: var(--slate-100);
-    color: var(--slate-600);
-    border: none;
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 0.82rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
-
-.tour-welcome-toast__btn-dismiss:hover {
-    background: var(--slate-200);
-    color: var(--slate-800);
-}
-
-@media (max-width: 640px) {
-    .tour-welcome-toast {
-        left: 16px;
-        right: 16px;
-        max-width: none;
-        bottom: 74px;
-    }
-}
-
-/* ---------- 3. STATIC SECTION "COMO FUNCIONA O AGENDAMENTO" ---------- */
+/* ---------- 4. STATIC SECTION "COMO FUNCIONA O AGENDAMENTO" ---------- */
 .tutorial-section {
     background-color: var(--slate-50);
     position: relative;
@@ -410,25 +639,22 @@
         grid-template-columns: 1fr;
         gap: 32px;
     }
-    
     .tutorial-cta-box {
         flex-direction: column;
         text-align: center;
         padding: 28px 20px;
     }
-
     .tutorial-cta-box__actions {
         flex-direction: column;
         width: 100%;
     }
-
     .tutorial-cta-box__actions .btn {
         width: 100%;
         justify-content: center;
     }
 }
 
-/* ---------- 4. DYNAMIC SPOTLIGHT OVERLAY & BACKDROP ---------- */
+/* ---------- 5. DYNAMIC SPOTLIGHT OVERLAY & BACKDROP ---------- */
 .tour-overlay-container {
     position: fixed;
     inset: 0;
@@ -445,7 +671,6 @@
     pointer-events: auto;
 }
 
-/* Dark clickable backdrop behind the spotlight cut-out */
 .tour-backdrop {
     position: absolute;
     inset: 0;
@@ -454,7 +679,6 @@
     transition: background 0.3s ease;
 }
 
-/* The spotlight box that frames the highlighted element */
 .tour-spotlight {
     position: absolute;
     border-radius: 16px;
@@ -469,7 +693,6 @@
     z-index: 10001;
 }
 
-/* Pulse animation on the spotlight */
 @keyframes tourPulseRing {
     0% {
         box-shadow: 0 0 0 9999px rgba(12, 35, 64, 0.72),
@@ -492,7 +715,7 @@
     animation: tourPulseRing 2.2s infinite ease-in-out;
 }
 
-/* ---------- 5. TOUR POPOVER CARD ---------- */
+/* ---------- 6. TOUR POPOVER CARD ---------- */
 .tour-popover {
     position: absolute;
     width: 380px;
@@ -516,7 +739,6 @@
     transform: translateY(0) scale(1);
 }
 
-/* Header with gradient */
 .tour-popover__header {
     background: linear-gradient(135deg, var(--royal-500) 0%, var(--royal-700) 100%);
     color: #ffffff;
@@ -560,7 +782,6 @@
     transform: rotate(90deg);
 }
 
-/* Body */
 .tour-popover__body {
     padding: 22px 22px 18px;
 }
@@ -607,7 +828,6 @@
     color: var(--royal-700);
 }
 
-/* Footer & Controls */
 .tour-popover__footer {
     background: var(--slate-50);
     border-top: 1px solid var(--slate-200);
@@ -696,7 +916,6 @@
     box-shadow: 0 6px 14px rgba(16, 185, 129, 0.45);
 }
 
-/* Mobile docked presentation for small screens */
 @media (max-width: 640px) {
     .tour-popover {
         position: fixed !important;

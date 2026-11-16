@@ -1,14 +1,14 @@
 /**
- * Corujinha Banho & Tosa - Interactive Guided Client Tour / Tutorial
+ * Corujinha Banho & Tosa - Interactive Guided Client Tour & Onboarding
  */
 
 (function () {
   'use strict';
 
   const STORAGE_KEY = 'corujinha_tour_seen';
-  const TOAST_KEY = 'corujinha_tour_toast_dismissed';
+  const ONBOARDING_KEY = 'corujinha_onboarding_shown';
 
-  // Definição dos 4 passos essenciais do tutorial
+  // 4 passos essenciais do tutorial com spotlight
   const TOUR_STEPS = [
     {
       id: 'step-care',
@@ -51,7 +51,7 @@
   let popoverEl = null;
   let currentTargetEl = null;
 
-  // Cria os elementos do tour no DOM
+  // Cria os elementos do tour guiado (spotlight) no DOM
   function createTourElements() {
     if (document.getElementById('tourOverlayContainer')) return;
 
@@ -98,7 +98,6 @@
     // Eventos
     document.getElementById('tourCloseBtn').addEventListener('click', () => endTour(false));
     document.getElementById('tourBackdrop').addEventListener('click', (e) => {
-      // Clique fora pode avançar ou fechar
       if (e.target.id === 'tourBackdrop') {
         endTour(false);
       }
@@ -127,7 +126,6 @@
     const rect = currentTargetEl.getBoundingClientRect();
     const padding = 10;
 
-    // Ajusta o spotlight recortado
     const top = Math.max(0, rect.top - padding);
     const left = Math.max(0, rect.left - padding);
     const width = Math.min(window.innerWidth - left, rect.width + (padding * 2));
@@ -138,7 +136,7 @@
     spotlightEl.style.width = `${width}px`;
     spotlightEl.style.height = `${height}px`;
 
-    // Se estiver em mobile, o CSS faz dock na base
+    // Em mobile (<=640px), o CSS ancora na base
     if (window.innerWidth <= 640) {
       popoverEl.classList.add('is-positioned');
       return;
@@ -150,12 +148,10 @@
     const popoverWidth = popoverRect.width || 380;
 
     let popoverTop = top + height + 16;
-    // Se passar do fundo da tela, joga para cima do elemento
     if (popoverTop + popoverHeight > window.innerHeight - 20) {
       popoverTop = Math.max(20, top - popoverHeight - 16);
     }
 
-    // Centraliza horizontalmente com o alvo, respeitando margens
     let popoverLeft = left + (width / 2) - (popoverWidth / 2);
     popoverLeft = Math.max(20, Math.min(window.innerWidth - popoverWidth - 20, popoverLeft));
 
@@ -170,19 +166,16 @@
     const step = TOUR_STEPS[idx];
     if (!step) return;
 
-    // Busca elemento alvo
     let target = document.querySelector(step.selector);
     if (!target) {
       target = document.body;
     }
     currentTargetEl = target;
 
-    // Rola suavemente até o elemento
     if (target !== document.body) {
       target.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    // Atualiza textos
     document.getElementById('tourStepBadge').textContent = `Passo ${idx + 1} de ${TOUR_STEPS.length}`;
     document.getElementById('tourIcon').innerHTML = step.icon || '';
     document.getElementById('tourTitleText').textContent = step.title;
@@ -197,7 +190,6 @@
       tipContainer.style.display = 'none';
     }
 
-    // Dots indicadores
     const dotsContainer = document.getElementById('tourDots');
     dotsContainer.innerHTML = '';
     TOUR_STEPS.forEach((_, i) => {
@@ -206,7 +198,6 @@
       dotsContainer.appendChild(dot);
     });
 
-    // Botões
     const prevBtn = document.getElementById('tourPrevBtn');
     const nextBtn = document.getElementById('tourNextBtn');
 
@@ -220,7 +211,6 @@
       nextBtn.className = 'tour-btn tour-btn--next';
     }
 
-    // Atualiza após animação de scroll
     setTimeout(updateSpotlightAndPopover, 320);
   }
 
@@ -228,7 +218,6 @@
     if (currentStepIdx < TOUR_STEPS.length - 1) {
       nextStep();
     } else {
-      // Concluiu o tour: encerra e abre o agendamento!
       endTour(true);
     }
   }
@@ -246,15 +235,12 @@
   }
 
   function startTour(initialStep = 0) {
+    // Fecha modal de onboarding se estiver aberto
+    closeOnboardingModal();
+
     createTourElements();
     isTourActive = true;
     overlayContainer.classList.add('is-active');
-
-    // Esconde toast de boas-vindas se estiver visível
-    const toast = document.getElementById('tourWelcomeToast');
-    if (toast) toast.classList.remove('is-visible');
-
-    // Previne scroll do body pelo mouse wheel sem estragar layout
     document.body.classList.add('tour-is-open');
 
     renderStep(initialStep);
@@ -267,14 +253,11 @@
     }
     document.body.classList.remove('tour-is-open');
 
-    // Salva que o usuário já viu o tour
     try {
       localStorage.setItem(STORAGE_KEY, 'true');
-    } catch (e) {
-      // ignore
-    }
+      localStorage.setItem(ONBOARDING_KEY, 'true');
+    } catch (e) {}
 
-    // Se concluiu no botão final, abre o assistente de agendamento oficial
     if (triggerBooking && window.CorujinhaBooking && typeof window.CorujinhaBooking.open === 'function') {
       setTimeout(() => {
         window.CorujinhaBooking.open('Banho com Tosa Higiênica');
@@ -282,61 +265,124 @@
     }
   }
 
-  // Toast de boas-vindas discreto para primeira visita
-  function checkFirstVisitWelcomeToast() {
-    try {
-      const hasSeen = localStorage.getItem(STORAGE_KEY);
-      const isDismissed = localStorage.getItem(TOAST_KEY);
-      if (hasSeen || isDismissed) return;
+  // ============================================================
+  // MODAL DE ONBOARDING AUTOMÁTICO (PRIMEIRA VISITA)
+  // ============================================================
+  function createOnboardingModal() {
+    if (document.getElementById('tourOnboardingOverlay')) return;
 
-      setTimeout(() => {
-        if (isTourActive) return;
+    const modal = document.createElement('div');
+    modal.id = 'tourOnboardingOverlay';
+    modal.className = 'tour-onboarding-overlay';
+    modal.innerHTML = `
+      <div class="tour-onboarding-card" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle">
+        <button class="tour-onboarding-close" id="onboardingCloseX" aria-label="Fechar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
 
-        const toast = document.createElement('div');
-        toast.id = 'tourWelcomeToast';
-        toast.className = 'tour-welcome-toast';
-        toast.innerHTML = `
-          <div class="tour-welcome-toast__header">
-            <span class="tour-welcome-toast__tag">🐾 Primeira Visita?</span>
-            <button class="tour-welcome-toast__close" id="toastDismissBtn" aria-label="Fechar">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
+        <span class="tour-onboarding-badge">🐾 Atendimento 100% Exclusivo</span>
+        <h3 class="tour-onboarding-title" id="onboardingTitle">Como funciona o agendamento na Corujinha?</h3>
+        <p class="tour-onboarding-subtitle">Trabalhamos exclusivamente com horário marcado para que seu pet seja atendido com calma, carinho e <strong>sem estresse de gaiolas</strong>.</p>
+
+        <div class="tour-onboarding-steps">
+          <div class="tour-onboarding-step-item">
+            <span class="tour-onboarding-step-num">1</span>
+            <div class="tour-onboarding-step-info">
+              <strong>Serviço Ideal &amp; Linha Hydra</strong>
+              <p>Banho com tosa higiênica, tosa na máquina ou bebê com cosméticos hipoalergênicos.</p>
+            </div>
           </div>
-          <h5 class="tour-welcome-toast__title">Veja como funciona nosso agendamento</h5>
-          <p class="tour-welcome-toast__text">Faça um tour rápido de 30 segundos e descubra como agendar o horário do seu pet com conforto e sem espera!</p>
-          <div class="tour-welcome-toast__actions">
-            <button type="button" class="tour-welcome-toast__btn-start" id="toastStartBtn">Fazer Tour Rápido</button>
-            <button type="button" class="tour-welcome-toast__btn-dismiss" id="toastDismissTextBtn">Agora não</button>
+
+          <div class="tour-onboarding-step-item">
+            <span class="tour-onboarding-step-num">2</span>
+            <div class="tour-onboarding-step-info">
+              <strong>Escolha o Dia e Horário</strong>
+              <p>Nosso assistente online permite selecionar a data com cálculo de valor na hora.</p>
+            </div>
           </div>
-        `;
 
-        document.body.appendChild(toast);
-        // Animação de entrada
-        requestAnimationFrame(() => {
-          toast.classList.add('is-visible');
-        });
+          <div class="tour-onboarding-step-item">
+            <span class="tour-onboarding-step-num">3</span>
+            <div class="tour-onboarding-step-info">
+              <strong>Confirmação Imediata no WhatsApp</strong>
+              <p>A equipe (Maíra &amp; Rodrigo) recebe seu pedido pronto e confirma tudo na hora.</p>
+            </div>
+          </div>
+        </div>
 
-        const closeToast = () => {
-          toast.classList.remove('is-visible');
-          try {
-            localStorage.setItem(TOAST_KEY, 'true');
-          } catch (e) {}
-          setTimeout(() => toast.remove(), 400);
-        };
+        <div class="tour-onboarding-actions">
+          <button type="button" class="btn--tour-onboarding-primary" id="onboardingStartBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span>Fazer Tutorial Interativo na Tela (30 seg)</span>
+          </button>
+          <button type="button" class="btn--tour-onboarding-skip" id="onboardingSkipBtn">
+            Já conheço, quero navegar direto no site
+          </button>
+        </div>
+      </div>
+    `;
 
-        document.getElementById('toastDismissBtn').addEventListener('click', closeToast);
-        document.getElementById('toastDismissTextBtn').addEventListener('click', closeToast);
-        document.getElementById('toastStartBtn').addEventListener('click', () => {
-          closeToast();
-          startTour(0);
-        });
-      }, 2600);
-    } catch (e) {
-      // ignore
+    document.body.appendChild(modal);
+
+    document.getElementById('onboardingStartBtn').addEventListener('click', () => {
+      closeOnboardingModal();
+      startTour(0);
+    });
+
+    document.getElementById('onboardingSkipBtn').addEventListener('click', () => {
+      closeOnboardingModal();
+      try {
+        localStorage.setItem(ONBOARDING_KEY, 'true');
+      } catch (e) {}
+    });
+
+    document.getElementById('onboardingCloseX').addEventListener('click', () => {
+      closeOnboardingModal();
+      try {
+        localStorage.setItem(ONBOARDING_KEY, 'true');
+      } catch (e) {}
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeOnboardingModal();
+        try {
+          localStorage.setItem(ONBOARDING_KEY, 'true');
+        } catch (e) {}
+      }
+    });
+  }
+
+  function showOnboardingModal() {
+    createOnboardingModal();
+    const modal = document.getElementById('tourOnboardingOverlay');
+    if (modal) {
+      modal.classList.add('is-open');
     }
   }
 
-  // Conecta botões da página que disparam o tutorial
+  function closeOnboardingModal() {
+    const modal = document.getElementById('tourOnboardingOverlay');
+    if (modal) {
+      modal.classList.remove('is-open');
+    }
+  }
+
+  // Verifica primeira visita para abrir o onboarding primordial
+  function checkFirstVisitOnboarding() {
+    try {
+      const alreadyShown = localStorage.getItem(ONBOARDING_KEY) || localStorage.getItem(STORAGE_KEY);
+      if (!alreadyShown) {
+        setTimeout(() => {
+          showOnboardingModal();
+        }, 550);
+      }
+    } catch (e) {}
+  }
+
+  // Intercepta todos os botões de disparo de tutorial
   function bindTriggerButtons() {
     document.addEventListener('click', (e) => {
       const trigger = e.target.closest('#startTourHeroBtn, #startTourNavBtn, #startTourFloatBtn, #startTourSectionBtn, .js-trigger-tour');
@@ -347,22 +393,23 @@
     });
   }
 
-  // Expõe API global
+  // API Global
   window.CorujinhaTour = {
     start: startTour,
     next: nextStep,
     prev: prevStep,
-    end: endTour
+    end: endTour,
+    showOnboarding: showOnboardingModal,
+    closeOnboarding: closeOnboardingModal
   };
 
-  // Inicializa quando o DOM estiver pronto
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       bindTriggerButtons();
-      checkFirstVisitWelcomeToast();
+      checkFirstVisitOnboarding();
     });
   } else {
     bindTriggerButtons();
-    checkFirstVisitWelcomeToast();
+    checkFirstVisitOnboarding();
   }
 })();
