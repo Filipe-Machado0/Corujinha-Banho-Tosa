@@ -10,6 +10,7 @@ Website institucional e responsivo desenvolvido para a **Corujinha Banho & Tosa*
 
 ## 📋 Recursos do Projeto
 - **Zero Emojis**: Design limpo e institucional
+- **Tutorial & Tour Interativo para Clientes**: Onboarding com spotlight guiado (4 passos) e seção visual "Como Funciona o Agendamento" explicando horário marcado, catálogo de serviços, escolha de data e confirmação no WhatsApp
 - **Avaliações do Google**: Seção de depoimentos no padrão oficial de reputação
 - **Catálogo de Serviços**: Cards estruturados de Banho e Tosa com botão direto para WhatsApp com mensagem pré-definida
 - **Botão Flutuante de Contato**: Azul Royal com radar pulse effect
